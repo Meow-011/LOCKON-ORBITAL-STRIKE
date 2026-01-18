@@ -142,8 +142,21 @@ LOCKON_WebScaner/
    cd LOCKON-ORBITAL-STRIKE
    ```
 
-2. **Install Dependencies**
+2. **Install Dependencies (Virtual Environment Recommended)**
+   
+   It is recommended to use a virtual environment to avoid conflicts.
+
+   **Windows:**
+   ```powershell
+   python -m venv venv
+   .\venv\Scripts\activate
+   pip install -r requirements.txt
+   ```
+
+   **Linux / macOS:**
    ```bash
+   python3 -m venv venv
+   source venv/bin/activate
    pip install -r requirements.txt
    ```
 
