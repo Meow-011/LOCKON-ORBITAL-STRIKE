@@ -134,6 +134,8 @@ LOCKON_WebScaner/
 
 *(And 30+ more modules covering SQLi, LFI, SSRF, IDOR, etc.)*
 
+![lockon gif](images/lockon_oo.gif)
+
 ---
 
 ##  Installation
@@ -178,8 +180,6 @@ python main.py
 2. Select your **Attack Profile** (Full Scan, SQLi Only, etc.).
 3. Toggle **Active Stealth Mode** if WAF evasion is needed.
 4. Click **INITIALIZE ATTACK VECTOR**.
-
-![lockon gif](images/lockon_oo.gif)
 
 ---
 
