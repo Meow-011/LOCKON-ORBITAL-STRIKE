@@ -111,7 +111,7 @@ def setup_nmap(callback=None):
         log_msg("✅ Nmap is detected in system.", callback)
     else:
         log_msg("⚠️ Nmap NOT found. Port scan might fail.", callback)
-            log_msg("👉 Please install Nmap manually from nmap.org", callback)
+        log_msg("👉 Please install Nmap manually from nmap.org", callback)
 
 def check_python_packages(callback=None):
     log_msg("\n[0/4] Verifying Python Libraries...", callback)
