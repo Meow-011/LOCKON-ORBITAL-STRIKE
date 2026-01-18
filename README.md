@@ -4,13 +4,13 @@
 
 **The Ultimate Advanced Web Application Security Scanner & Exploitation Framework.**
 
-LOCKON is a next-generation security tool designed for Red Teamers and Bounty Hunters. It combines automated vulnerability scanning with "God Mode" active exploitation capabilities, targeting Web Apps, APIs, Cloud Infrastructure, and Corporate Networks.
+LOCKON: THE ORBITAL STRIKE is a next-generation security tool designed for Red Teamers and Bounty Hunters. It combines automated vulnerability scanning with "KINETIC STRIKE" active exploitation capabilities, targeting Web Apps, APIs, Cloud Infrastructure, and Corporate Networks.
 
 ---
 
 ##  Key Features
 
-###  GOD MODE (Active Exploitation)
+###  KINETIC STRIKE (Active Exploitation)
 - **42+ RCE Arsenal**: Fully automated Remote Code Execution for major CVEs (Metabase, PaperCut, Solr, WebLogic, Struts, Log4Shell, etc.).
 - **Infrastructure Killers**: Takeover Big Data systems (Hadoop YARN, RocketMQ, HugeGraph) and Monitor tools (Cacti, Zabbix).
 - **Auto-Shell**: Automatically uploads Web Shells and establishes Reverse Shells (C2) upon successful exploit.
@@ -39,7 +39,7 @@ graph LR
     C -->|Smart Headers| D[Recon Modules]
     C -->|Mutation| E[Active Exploits]
     D & E -->|Findings| F(Project DOMINO)
-    F -->|Critical Found| G[Auto-Exploit / God Mode]
+    F -->|Critical Found| G[Auto-Exploit / KINETIC STRIKE]
     G -->|Success| H((C2 REVERSE SHELL))
 ```
 
@@ -66,7 +66,7 @@ LOCKON_WebScaner/
 ├── gui/                #  Orbital UI (Flet Components)
 ├── modules/            #  Attack Modules
 │   ├── active/         #  Active Scanners (XSS, SQLi, CVEs)
-│   ├── exploit/        #  God Mode (Shells, Payload Gen)
+│   ├── exploit/        #  KINETIC STRIKE (Shells, Payload Gen)
 │   ├── recon/          #  Discovery (Subfinder, Wappalyzer)
 │   └── payloads/       #  Venom Mutation Engine
 ├── pocs/               #  Auto-Generated Exploit PoCs
@@ -191,7 +191,3 @@ Since **LOCKON** contains real exploit payloads (Reverse Shells, Web Shells), yo
 
 **This tool is for EDUCATIONAL PURPOSES and AUTHORIZED PENETRATION TESTING ONLY.**
 Do not use this tool on systems you do not own or do not have explicit permission to test. The authors are not responsible for any misuse or damage caused by this tool.
-
----
-
-*Powered by LOCKON Security Research Team.*
