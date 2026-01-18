@@ -45,7 +45,7 @@ graph LR
 
 ---
 
-## 🛠️ Tech Stack & Components
+##  Tech Stack & Components
 
 | Component | Technology | Description |
 | :--- | :--- | :--- |
@@ -58,21 +58,21 @@ graph LR
 
 ---
 
-## 📂 Project Structure
+##  Project Structure
 
 ```bash
 LOCKON_WebScaner/
-├── core/               # 🧠 Neural Engine (Scanner, Cortex AI, Domino)
-├── gui/                # 💻 Orbital UI (Flet Components)
-├── modules/            # 📦 Attack Modules
-│   ├── active/         # ⚔️ Active Scanners (XSS, SQLi, CVEs)
-│   ├── exploit/        # 🔱 God Mode (Shells, Payload Gen)
-│   ├── recon/          # 👁️ Discovery (Subfinder, Wappalyzer)
-│   └── payloads/       # 🦠 Venom Mutation Engine
-├── pocs/               # 📝 Auto-Generated Exploit PoCs
-├── loot/               # 💰 Exfiltrated Data (Secrets, Hashes)
-├── reports/            # 📊 HTML/PDF Scan Reports
-└── main.py             # 🚀 Entry Point
+├── core/               #  Neural Engine (Scanner, Cortex AI, Domino)
+├── gui/                #  Orbital UI (Flet Components)
+├── modules/            #  Attack Modules
+│   ├── active/         #  Active Scanners (XSS, SQLi, CVEs)
+│   ├── exploit/        #  God Mode (Shells, Payload Gen)
+│   ├── recon/          #  Discovery (Subfinder, Wappalyzer)
+│   └── payloads/       #  Venom Mutation Engine
+├── pocs/               #  Auto-Generated Exploit PoCs
+├── loot/               #  Exfiltrated Data (Secrets, Hashes)
+├── reports/            #  HTML/PDF Scan Reports
+└── main.py             #  Entry Point
 ```
 
 ---
@@ -166,28 +166,28 @@ python main.py
 
 ---
 
-## ❓ Troubleshooting
+##  Troubleshooting
 
-### 1. ❌ Playwright / Browser Issues
+### 1.  Playwright / Browser Issues
 If you see errors related to "Browser not installed":
 ```bash
 python -m playwright install chromium
 ```
 
-### 2. 🛑 "Module Not Found" Error
+### 2.  "Module Not Found" Error
 Ensure you are running in the correct environment or try reinstalling requirements:
 ```bash
 pip install --upgrade --force-reinstall -r requirements.txt
 ```
 
-### 3. 🛡️ Antivirus / Windows Defender Alert
+### 3.  Antivirus / Windows Defender Alert
 Since **LOCKON** contains real exploit payloads (Reverse Shells, Web Shells), your AV might flag it as malicious.
 - **Solution**: Add the project folder to your Antivirus **Exclusions** list.
 - *Note: This behavior is normal for security tools.*
 
 ---
 
-## ⚠️ Disclaimer
+##  Disclaimer
 
 **This tool is for EDUCATIONAL PURPOSES and AUTHORIZED PENETRATION TESTING ONLY.**
 Do not use this tool on systems you do not own or do not have explicit permission to test. The authors are not responsible for any misuse or damage caused by this tool.
