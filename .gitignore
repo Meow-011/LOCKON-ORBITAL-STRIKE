@@ -1,0 +1,29 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+venv/
+.env
+
+# Output / Artifacts
+reports/
+loot/
+pocs/
+logs/
+brain/
+.gemini/
+
+# Binaries
+bin/
+*.exe
+*.zip
+*.tar.gz
+
+# IDE
+.vscode/
+.idea/
+
+# Lockon Specific
+session.db
+*.db
+*.log

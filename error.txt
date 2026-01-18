@@ -1,0 +1,36 @@
+Task exception was never retrieved
+future: <Task finished name='Task-1900' coro=<<_BaseRequestContextManager without __name__>()> exception=RuntimeError('Session is closed')>
+Traceback (most recent call last):
+  File "C:\Users\natth\OneDrive\Desktop\MyProject\LOCKON_WebScaner\venv\Lib\site-packages\aiohttp\client.py", line 1494, in send
+    return self._coro.send(arg)
+           ~~~~~~~~~~~~~~~^^^^^
+  File "C:\Users\natth\OneDrive\Desktop\MyProject\LOCKON_WebScaner\venv\Lib\site-packages\aiohttp\client.py", line 529, in _request
+    raise RuntimeError("Session is closed")
+RuntimeError: Session is closed
+Task exception was never retrieved
+future: <Task finished name='Task-1901' coro=<<_BaseRequestContextManager without __name__>()> exception=RuntimeError('Session is closed')>
+Traceback (most recent call last):
+  File "C:\Users\natth\OneDrive\Desktop\MyProject\LOCKON_WebScaner\venv\Lib\site-packages\aiohttp\client.py", line 1494, in send
+    return self._coro.send(arg)
+           ~~~~~~~~~~~~~~~^^^^^
+  File "C:\Users\natth\OneDrive\Desktop\MyProject\LOCKON_WebScaner\venv\Lib\site-packages\aiohttp\client.py", line 529, in _request
+    raise RuntimeError("Session is closed")
+RuntimeError: Session is closed
+Task exception was never retrieved
+future: <Task finished name='Task-1902' coro=<<_BaseRequestContextManager without __name__>()> exception=RuntimeError('Session is closed')>
+Traceback (most recent call last):
+  File "C:\Users\natth\OneDrive\Desktop\MyProject\LOCKON_WebScaner\venv\Lib\site-packages\aiohttp\client.py", line 1494, in send
+    return self._coro.send(arg)
+           ~~~~~~~~~~~~~~~^^^^^
+  File "C:\Users\natth\OneDrive\Desktop\MyProject\LOCKON_WebScaner\venv\Lib\site-packages\aiohttp\client.py", line 529, in _request
+    raise RuntimeError("Session is closed")
+RuntimeError: Session is closed
+Task exception was never retrieved
+future: <Task finished name='Task-1903' coro=<<_BaseRequestContextManager without __name__>()> exception=RuntimeError('Session is closed')>
+Traceback (most recent call last):
+  File "C:\Users\natth\OneDrive\Desktop\MyProject\LOCKON_WebScaner\venv\Lib\site-packages\aiohttp\client.py", line 1494, in send
+    return self._coro.send(arg)
+           ~~~~~~~~~~~~~~~^^^^^
+  File "C:\Users\natth\OneDrive\Desktop\MyProject\LOCKON_WebScaner\venv\Lib\site-packages\aiohttp\client.py", line 529, in _request
+    raise RuntimeError("Session is closed")
+RuntimeError: Session is closed

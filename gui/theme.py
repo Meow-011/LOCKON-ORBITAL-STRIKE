@@ -1,0 +1,45 @@
+import flet as ft
+
+# --- 🎨 THEME COLORS ---
+APP_TITLE = "LOCKON: THE ORBITAL STRIKE"
+COLOR_BG_APP = "#0D1117"
+COLOR_BG_PANEL = "#161B22"
+COLOR_BG_INPUT = "#090C10"
+COLOR_BORDER = "#30363D"
+COLOR_ACCENT = "#F85149"
+COLOR_PRIMARY = "#238636"
+COLOR_TEXT_MAIN = "#C9D1D9"
+COLOR_TEXT_DIM = "#8B949E"
+COLOR_TERM_BG = "#090C10"
+COLOR_C2_BG = "#000000"
+COLOR_C2_TEXT = "#00FF00" 
+COLOR_SEV_CRITICAL = "#FF7B72"
+COLOR_SEV_HIGH = "#D2A8FF"
+COLOR_SEV_MEDIUM = "#D29922"
+COLOR_SEV_LOW = "#3FB950"
+COLOR_SEV_INFO = "#58A6FF"
+
+# --- FONTS ---
+FONTS = {
+    "Hacker": "Consolas, 'Courier New', monospace",
+    "UI": "Segoe UI, Roboto, sans-serif"
+}
+
+def apply_theme(page: ft.Page):
+    page.title = APP_TITLE
+    page.theme_mode = ft.ThemeMode.DARK
+    page.bgcolor = COLOR_BG_APP
+    page.window_width = 1600
+    page.window_height = 900
+    page.padding = 0
+    page.fonts = FONTS
+    
+    page.theme = ft.Theme(
+        font_family="UI",
+        scrollbar_theme=ft.ScrollbarTheme(
+            thumb_color={ft.ControlState.DEFAULT: "#30363D"},
+            thickness=8,
+            radius=4,
+            interactive=True
+        )
+    )

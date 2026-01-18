@@ -1,0 +1,10 @@
+flet
+packaging
+requests
+pillow
+aiohttp
+beautifulsoup4
+playwright
+pyjwt
+dnspython
+colorama
