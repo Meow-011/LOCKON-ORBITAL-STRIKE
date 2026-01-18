@@ -45,7 +45,42 @@ graph LR
 
 ---
 
+## 🛠️ Tech Stack & Components
+
+| Component | Technology | Description |
+| :--- | :--- | :--- |
+| **Core Engine** | ![Python](https://img.shields.io/badge/Python-3.11+-blue?logo=python) | AsyncIO Event Loop, Multi-threading |
+| **UI Framework** | ![Flet](https://img.shields.io/badge/Flet-UI-purple) | Flutter-based Python GUI for Cross-platform |
+| **Network** | ![Aiohttp](https://img.shields.io/badge/Aiohttp-Async-red) | High-performance Async HTTP Client |
+| **Headless** | ![Playwright](https://img.shields.io/badge/Playwright-Browser-orange) | Chromium Engine for DOM XSS & Deep Scanning |
+| **Parsing** | ![BS4](https://img.shields.io/badge/BeautifulSoup-Parsing-green) | HTML/XML Parser & Scraper |
+| **Crypto** | ![PyJWT](https://img.shields.io/badge/PyJWT-Token-black) | JWT Manipulation & Forgery |
+
+---
+
+## 📂 Project Structure
+
+```bash
+LOCKON_WebScaner/
+├── core/               # 🧠 Neural Engine (Scanner, Cortex AI, Domino)
+├── gui/                # 💻 Orbital UI (Flet Components)
+├── modules/            # 📦 Attack Modules
+│   ├── active/         # ⚔️ Active Scanners (XSS, SQLi, CVEs)
+│   ├── exploit/        # 🔱 God Mode (Shells, Payload Gen)
+│   ├── recon/          # 👁️ Discovery (Subfinder, Wappalyzer)
+│   └── payloads/       # 🦠 Venom Mutation Engine
+├── pocs/               # 📝 Auto-Generated Exploit PoCs
+├── loot/               # 💰 Exfiltrated Data (Secrets, Hashes)
+├── reports/            # 📊 HTML/PDF Scan Reports
+└── main.py             # 🚀 Entry Point
+```
+
+---
+
 ##  Supported Vulnerabilities (Active Arsenal)
+
+<details>
+<summary><strong>View Full Target List (42+ Modules)</strong></summary>
 
 | Category | Target System | CVE ID | Impact |
 | :--- | :--- | :--- | :--- |
@@ -93,6 +128,9 @@ graph LR
 | **Legacy** | PHP-CGI | CVE-2024-4577 | **Arg Injection** |
 | **IoT** | Hikvision IP Camera | CVE-2021-36260 | **Command Injection** |
 
+</details>
+
+*(And 30+ more modules covering SQLi, LFI, SSRF, IDOR, etc.)*
 
 ---
 
@@ -128,7 +166,28 @@ python main.py
 
 ---
 
-##  Disclaimer
+## ❓ Troubleshooting
+
+### 1. ❌ Playwright / Browser Issues
+If you see errors related to "Browser not installed":
+```bash
+python -m playwright install chromium
+```
+
+### 2. 🛑 "Module Not Found" Error
+Ensure you are running in the correct environment or try reinstalling requirements:
+```bash
+pip install --upgrade --force-reinstall -r requirements.txt
+```
+
+### 3. 🛡️ Antivirus / Windows Defender Alert
+Since **LOCKON** contains real exploit payloads (Reverse Shells, Web Shells), your AV might flag it as malicious.
+- **Solution**: Add the project folder to your Antivirus **Exclusions** list.
+- *Note: This behavior is normal for security tools.*
+
+---
+
+## ⚠️ Disclaimer
 
 **This tool is for EDUCATIONAL PURPOSES and AUTHORIZED PENETRATION TESTING ONLY.**
 Do not use this tool on systems you do not own or do not have explicit permission to test. The authors are not responsible for any misuse or damage caused by this tool.
