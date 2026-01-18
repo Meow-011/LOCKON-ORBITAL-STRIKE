@@ -1,12 +1,12 @@
 # LOCKON: THE ORBITAL STRIKE
 
-![Version](https://img.shields.io/badge/Version-2.0-cyan) ![Status](https://img.shields.io/badge/Status-Active-green) ![License](https://img.shields.io/badge/License-MIT-orange)
+![Version](https://img.shields.io/badge/Version-2.0-cyan) ![Status](https://img.shields.io/badge/Status-Active-green)
 
 **The Ultimate Advanced Web Application Security Scanner & Exploitation Framework.**
 
 LOCKON: THE ORBITAL STRIKE is a next-generation security tool designed for Red Teamers and Bounty Hunters. It combines automated vulnerability scanning with "KINETIC STRIKE" active exploitation capabilities, targeting Web Apps, APIs, Cloud Infrastructure, and Corporate Networks.
 
-![anime gif](images/Misato_Tachibana_banner.gif)
+![DashB img](images/DashB1.png)
 
 ---
 
