@@ -179,6 +179,8 @@ python main.py
 3. Toggle **Active Stealth Mode** if WAF evasion is needed.
 4. Click **INITIALIZE ATTACK VECTOR**.
 
+![lockon gif](images/lockon_oo.gif)
+
 ---
 
 ##  Troubleshooting
