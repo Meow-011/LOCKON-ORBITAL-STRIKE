@@ -1,6 +1,6 @@
 # LOCKON: THE ORBITAL STRIKE
 
-![Version](https://img.shields.io/badge/Version-2.0-cyan) ![Status](https://img.shields.io/badge/Status-Active-green)
+![Version](https://img.shields.io/badge/Version-2.0_Beta-orange) ![Status](https://img.shields.io/badge/Status-In_Development-yellow)
 
 **The Ultimate Advanced Web Application Security Scanner & Exploitation Framework.**
 
@@ -132,7 +132,41 @@ LOCKON_WebScaner/
 
 </details>
 
-*(And 30+ more modules covering SQLi, LFI, SSRF, IDOR, etc.)*
+<details>
+<summary><strong>View General Vulnerability Modules (Core Engine)</strong></summary>
+
+| Category | Module Name | Capabilities |
+| :--- | :--- | :--- |
+| **Injection** | `xss.py, dom_xss.py` | Reflected, Stored, and DOM-based XSS scanning |
+| **Injection** | `injection.py` | SQLi (Error/Blind), HTML Injection, Iframe Injection |
+| **Injection** | `ssti.py` | Server-Side Template Injection (Jinja2, Mako, etc.) |
+| **Injection** | `nosql_injection.py` | NoSQL Injection (MongoDB, etc.) |
+| **Injection** | `ldap_injection.py` | LDAP Injection |
+| **Injection** | `xxe_deep.py` | XML External Entity (XXE) Injection |
+| **Injection** | `crlf_injector.py` | CRLF Injection / HTTP Response Splitting |
+| **Auth** | `auth_bypass.py` | 401/403 Bypass (Headers, Methods, URL encoding) |
+| **Auth** | `jwt_breaker.py` | JWT None Algo, Weak Secret, Kid Header Injection |
+| **Auth** | `admin_brute.py` | Admin Panel Finder & Default Credential check |
+| **Auth** | `privesc.py` | Privilege Escalation checks |
+| **Access** | `idor.py` | IDOR (Insecure Direct Object Reference) detection |
+| **Access** | `lfi.py` | Local File Inclusion (Path Traversal) |
+| **Access** | `ssrf.py` | Server-Side Request Forgery |
+| **Access** | `cors.py` | CORS Misconfiguration (Wildcard Origin) |
+| **API** | `api_scanner.py` | API specific vulnerabilities (REST, SOAP) |
+| **API** | `graphql.py` | GraphQL Introspection & Injection |
+| **API** | `websocket_scanner.py` | CSWSH (Cross-Site WebSocket Hijacking) |
+| **Logic** | `race_condition.py` | Race Condition testing |
+| **Logic** | `proto_pollution.py` | Prototype Pollution (Client/Server) |
+| **Logic** | `smuggling_verify.py` | HTTP Request Smuggling (CL.TE, TE.CL) |
+| **Logic** | `clickjacking.py` | X-Frame-Options Missing |
+| **Logic** | `takeover.py` | Subdomain Takeover verification |
+| **Leak** | `secrets.py` | API Key & Secret Leaks in JS/HTML |
+| **Leak** | `git_extractor.py` | Exposed `.git` repository |
+| **Leak** | `bucket_looter.py` | Public S3/Cloud Buckets |
+| **Leak** | `backup_killer.py` | Backup files (.bak, .old, .zip) exposure |
+| **Shell** | `upload_rce.py` | Unrestricted File Upload to RCE |
+
+</details>
 
 ![lockon gif](images/lockon_oo.gif)
 
