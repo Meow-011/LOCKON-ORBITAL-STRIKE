@@ -1,4 +1,4 @@
-# Core UI (Pinned to last stable classic version)
+# Core UI
 flet==0.28.3
 
 # Core Network & Utilities
@@ -12,6 +12,6 @@ dnspython
 colorama
 Pillow
 
-# Database (Verified versions from environment)
+# Database
 SQLAlchemy==2.0.45
 psycopg2-binary==2.9.11
