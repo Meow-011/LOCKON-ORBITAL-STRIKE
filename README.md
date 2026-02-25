@@ -1,6 +1,6 @@
 # LOCKON: THE ORBITAL STRIKE
 
-![Version](https://img.shields.io/badge/Version-2.0_Beta-orange) ![Status](https://img.shields.io/badge/Status-In_Development-yellow)
+![Status](https://img.shields.io/badge/Status-In_Development-yellow)
 
 **The Ultimate Advanced Web Application Security Scanner & Exploitation Framework.**
 
@@ -17,18 +17,34 @@ LOCKON: THE ORBITAL STRIKE is a next-generation security tool designed for Red T
 - **Infrastructure Killers**: Takeover Big Data systems (Hadoop YARN, RocketMQ, HugeGraph) and Monitor tools (Cacti, Zabbix).
 - **Auto-Shell**: Automatically uploads Web Shells and establishes Reverse Shells (C2) upon successful exploit.
 
-###  Advanced Scanning
-- **Deep Recon**: Subdomain enumeration (Subfinder), Tech Detection (Wappalyzer), and WAF Detection.
-- **Injection Engine**: SQLi, XSS (DOM/Reflected), NoSQL, LDAP, SSTI, and Command Injection.
-- **API Warfare**: GraphQL Introspection, JWT Attack, and Mass Assignment scanning.
+###  Advanced Scanning Engine
+- **Deep Recon**: Subdomain enumeration (Subfinder), Tech Detection (Wappalyzer), WAF Detection, and JS Entropy Analysis.
+- **Injection Engine**: SQLi, XSS (DOM/Reflected), NoSQL, LDAP, SSTI, XXE, CRLF, OS Command Injection, and Deserialization attacks.
+- **API Warfare**: GraphQL Introspection, JWT Attack, Mass Assignment, WebSocket Hijacking, and API Fuzzing.
+- **Nuclei Templates**: Built-in Nuclei template engine for security headers, default credentials, exposed panels, and more.
 
-###  Active Stealth
-- **WAF Evasion**: Jitter/Delay randomization and Header rotation.
-- **Cortex AI**: Adaptive scanning patterns to avoid detection.
+###  Active Stealth & Evasion
+- **WAF Evasion**: Jitter/Delay randomization, Header rotation, and smart payload mutation.
+- **Cortex AI**: Adaptive scanning patterns, context-aware analysis, and abort-safe sleep with stop event polling.
+- **Scope Manager**: Wildcard include/exclude patterns to control scan boundaries.
+
+###  Enterprise-Grade Analysis
+- **CVSS 3.1 Scoring**: Every finding automatically scored with CVSS vector, severity, and CWE/OWASP mapping.
+- **False Positive Validator**: Heuristic-based confidence scoring and optional re-validation.
+- **Remediation Guides**: Detailed fix guides attached to every finding.
+- **Ghost Writer**: Auto-generated standalone PoC scripts for confirmed High/Critical vulnerabilities.
+- **PDF & HTML Reports**: Professional scan reports with executive summary and technical details.
+
+###  Authentication Support
+- **Cookie Authentication**: Session-based authenticated scanning.
+- **Bearer Token**: JWT/API token injection into all modules.
+- **Form Login**: Automatic form-based login with session cookie capture.
 
 ###  Visual Command Center
 - **Orbital Attack Graph**: Visualize the Kill Chain from Recon to Action.
 - **Loot Gallery**: Browse captured screenshots, secrets, and files directly in the UI.
+- **Payload Editor**: Built-in payload crafting and mutation workspace.
+- **Proxy Intercept**: Real-time HTTP request/response interception and modification.
 
 ---
 
@@ -37,12 +53,18 @@ LOCKON: THE ORBITAL STRIKE is a next-generation security tool designed for Red T
 ```mermaid
 graph LR
     A[User / UI] -->|Config| B(CORE: Scanner Engine)
+    B -->|Auth| B1[Auth Manager]
+    B -->|Scope| B2[Scope Manager]
     B -->|Stealth Mode| C{Cortex AI}
     C -->|Smart Headers| D[Recon Modules]
     C -->|Mutation| E[Active Exploits]
     D & E -->|Findings| F(Project DOMINO)
-    F -->|Critical Found| G[Auto-Exploit / KINETIC STRIKE]
-    G -->|Success| H((C2 REVERSE SHELL))
+    F -->|Chain React| G[Kill Chain + KB]
+    G -->|Critical Found| H[KINETIC STRIKE]
+    H -->|Success| I((C2 REVERSE SHELL))
+    E -->|Findings| J[FP Validator]
+    J -->|Scored| K[CVSS + CWE/OWASP]
+    K --> L[PDF/HTML Reports]
 ```
 
 ---
@@ -57,23 +79,50 @@ graph LR
 | **Headless** | ![Playwright](https://img.shields.io/badge/Playwright-Browser-orange) | Chromium Engine for DOM XSS & Deep Scanning |
 | **Parsing** | ![BS4](https://img.shields.io/badge/BeautifulSoup-Parsing-green) | HTML/XML Parser & Scraper |
 | **Crypto** | ![PyJWT](https://img.shields.io/badge/PyJWT-Token-black) | JWT Manipulation & Forgery |
+| **Reporting** | ![ReportLab](https://img.shields.io/badge/ReportLab-PDF-blue) | Professional PDF Report Generation |
+| **Templates** | ![Nuclei](https://img.shields.io/badge/Nuclei-Templates-yellow) | YAML-based Vulnerability Templates |
+| **Recon** | ![Subfinder](https://img.shields.io/badge/Subfinder-DNS-green) | Subdomain Enumeration Engine |
 
 ---
 
 ##  Project Structure
 
 ```bash
-LOCKON_WebScaner/
-├── core/               #  Neural Engine (Scanner, Cortex AI, Domino)
-├── gui/                #  Orbital UI (Flet Components)
+LOCKON-ORBITAL-STRIKE/
+├── core/               #  Neural Engine
+│   ├── scanner.py      #  Main Scan Orchestrator
+│   ├── cortex.py       #  AI Brain (Adaptive Evasion)
+│   ├── domino.py       #  Chain Reaction Engine
+│   ├── evasion.py      #  WAF Bypass & Header Rotation
+│   ├── auth_manager.py #  Cookie/Bearer/Form Auth
+│   ├── scope_manager.py#  Scan Boundary Control
+│   ├── fp_validator.py #  False Positive Validator
+│   ├── cvss_calculator.py # CVSS 3.1 Scoring
+│   ├── remediation_db.py  # Fix Guides Database
+│   ├── ghost_writer.py #  Auto PoC Generator
+│   ├── nuclei_runner.py#  Nuclei Template Engine
+│   ├── reporter.py     #  HTML Report Generator
+│   ├── pdf_reporter.py #  PDF Report Generator
+│   ├── proxy_engine.py #  HTTP Proxy Interceptor
+│   ├── scheduler.py    #  Scan Scheduler
+│   └── plugin_loader.py#  Plugin System
+├── gui/                #  Orbital UI (Flet)
+│   └── tabs/           #  Mission, Findings, Graph,
+│                       #  History, Phantom, Payload
+│                       #  Editor, Proxy, System
 ├── modules/            #  Attack Modules
-│   ├── active/         #  Active Scanners (XSS, SQLi, CVEs)
-│   ├── exploit/        #  KINETIC STRIKE (Shells, Payload Gen)
-│   ├── recon/          #  Discovery (Subfinder, Wappalyzer)
+│   ├── active/         #  44 Active Scanners
+│   ├── exploit/        #  KINETIC STRIKE (Shells)
+│   ├── recon/          #  Discovery (14 Modules)
+│   ├── chain/          #  Kill Chain Engine
+│   ├── post_exploit/   #  Post-Exploitation
 │   └── payloads/       #  Venom Mutation Engine
-├── pocs/               #  Auto-Generated Exploit PoCs
-├── loot/               #  Exfiltrated Data (Secrets, Hashes)
-├── reports/            #  HTML/PDF Scan Reports
+├── templates/nuclei/   #  Nuclei YAML Templates
+├── plugins/            #  Custom Plugin System
+├── api/                #  REST API Server
+├── pocs/               #  Auto-Generated PoCs
+├── loot/               #  Exfiltrated Data
+├── reports/            #  HTML/PDF Reports
 └── main.py             #  Entry Point
 ```
 
@@ -133,7 +182,7 @@ LOCKON_WebScaner/
 </details>
 
 <details>
-<summary><strong>View General Vulnerability Modules (Core Engine)</strong></summary>
+<summary><strong>View General Vulnerability Modules (Core Engine — 44 Modules)</strong></summary>
 
 | Category | Module Name | Capabilities |
 | :--- | :--- | :--- |
@@ -144,7 +193,10 @@ LOCKON_WebScaner/
 | **Injection** | `ldap_injection.py` | LDAP Injection |
 | **Injection** | `xxe_deep.py` | XML External Entity (XXE) Injection |
 | **Injection** | `crlf_injector.py` | CRLF Injection / HTTP Response Splitting |
+| **Injection** | `os_cmd.py` | OS Command Injection (Blind & Output-based) |
+| **Injection** | `deserialization.py` | Java/PHP/Python Deserialization attacks |
 | **Auth** | `auth_bypass.py` | 401/403 Bypass (Headers, Methods, URL encoding) |
+| **Auth** | `auth_security.py` | Authentication security checks |
 | **Auth** | `jwt_breaker.py` | JWT None Algo, Weak Secret, Kid Header Injection |
 | **Auth** | `admin_brute.py` | Admin Panel Finder & Default Credential check |
 | **Auth** | `privesc.py` | Privilege Escalation checks |
@@ -152,18 +204,26 @@ LOCKON_WebScaner/
 | **Access** | `lfi.py` | Local File Inclusion (Path Traversal) |
 | **Access** | `ssrf.py` | Server-Side Request Forgery |
 | **Access** | `cors.py` | CORS Misconfiguration (Wildcard Origin) |
+| **Access** | `redirect.py` | Open Redirect detection |
 | **API** | `api_scanner.py` | API specific vulnerabilities (REST, SOAP) |
+| **API** | `api_fuzzer.py` | API endpoint fuzzing & parameter discovery |
 | **API** | `graphql.py` | GraphQL Introspection & Injection |
 | **API** | `websocket_scanner.py` | CSWSH (Cross-Site WebSocket Hijacking) |
+| **API** | `ws_fuzzer.py` | WebSocket protocol fuzzing |
 | **Logic** | `race_condition.py` | Race Condition testing |
 | **Logic** | `proto_pollution.py` | Prototype Pollution (Client/Server) |
 | **Logic** | `smuggling_verify.py` | HTTP Request Smuggling (CL.TE, TE.CL) |
 | **Logic** | `clickjacking.py` | X-Frame-Options Missing |
+| **Logic** | `host_header.py` | Host Header Injection (Cache Poisoning) |
 | **Logic** | `takeover.py` | Subdomain Takeover verification |
+| **Recon** | `param_miner.py` | Hidden parameter discovery |
+| **Recon** | `error_exposure.py` | Debug/Error page information disclosure |
 | **Leak** | `secrets.py` | API Key & Secret Leaks in JS/HTML |
 | **Leak** | `git_extractor.py` | Exposed `.git` repository |
 | **Leak** | `bucket_looter.py` | Public S3/Cloud Buckets |
 | **Leak** | `backup_killer.py` | Backup files (.bak, .old, .zip) exposure |
+| **Client** | `client_fuzzer.py` | Client-side deep scanning & DOM analysis |
+| **Client** | `evasion_evo.py` | Advanced WAF evasion techniques |
 | **Shell** | `upload_rce.py` | Unrestricted File Upload to RCE |
 
 </details>
@@ -198,8 +258,13 @@ LOCKON_WebScaner/
    pip install -r requirements.txt
    ```
 
-3. **Verify Setup**
-   - Run the tool and check the "SYSTEM" tab to verify external tools (Nuclei, Subfinder, Playwright) and Python libraries.
+3. **Install Playwright Browser**
+   ```bash
+   python -m playwright install chromium
+   ```
+
+4. **Verify Setup**
+   - Run the tool and check the **SYSTEM** tab to verify external tools (Nuclei, Subfinder, Playwright) and Python libraries.
 
 ---
 
@@ -212,8 +277,10 @@ python main.py
 
 1. Enter the **Target URL** in the Mission Tab.
 2. Select your **Attack Profile** (Full Scan, SQLi Only, etc.).
-3. Toggle **Active Stealth Mode** if WAF evasion is needed.
-4. Click **INITIALIZE ATTACK VECTOR**.
+3. Configure **Tactical Modules** (Custom module selection).
+4. Set **Authentication** (Cookie, Bearer Token, or Form Login) if needed.
+5. Toggle **Active Stealth Mode** if WAF evasion is needed.
+6. Click **INITIALIZE ATTACK VECTOR**.
 
 ---
 
@@ -235,6 +302,11 @@ pip install --upgrade --force-reinstall -r requirements.txt
 Since **LOCKON** contains real exploit payloads (Reverse Shells, Web Shells), your AV might flag it as malicious.
 - **Solution**: Add the project folder to your Antivirus **Exclusions** list.
 - *Note: This behavior is normal for security tools.*
+
+### 4.  Database Locked / Disk Full
+If scan history fails to save:
+- Delete `lockon_history.db` to reset the database.
+- Ensure sufficient disk space for reports and PoCs.
 
 ---
 
