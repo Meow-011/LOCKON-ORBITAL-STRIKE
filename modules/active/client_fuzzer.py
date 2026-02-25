@@ -50,7 +50,7 @@ async def check_prototype_pollution(session, url):
                                 "remediation": "Validate inputs and freeze Object.prototype."
                              })
                              break # Found one payload working
-            except: pass
+            except Exception: pass
             
     return findings
 
@@ -108,6 +108,6 @@ async def run_client_deep_scan(target_url, log_callback=None, headers=None):
                     text = await resp.text()
                     pm_res = await check_postmessage(session, target_url, text)
                     findings.extend(pm_res)
-            except: pass
+            except Exception: pass
             
     return findings

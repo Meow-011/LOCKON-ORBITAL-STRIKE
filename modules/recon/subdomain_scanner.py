@@ -24,7 +24,7 @@ async def check_alive(session, sub, proto="https"):
     try:
         async with session.get(target, timeout=3, ssl=False) as resp:
             return sub, resp.status
-    except:
+    except Exception:
         return sub, None
 
 async def verify_subdomains(subdomains, session=None):

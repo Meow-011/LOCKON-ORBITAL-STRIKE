@@ -28,7 +28,7 @@ async def extract_git_file(session, base_url, filename, desc):
                         "desc": desc,
                         "content": content
                     }
-    except: pass
+    except Exception: pass
     return None
 
 async def run_git_extractor(target_url, log_callback=None, headers=None):
@@ -41,7 +41,7 @@ async def run_git_extractor(target_url, log_callback=None, headers=None):
         try:
             async with session.get(f"{base_url}/.git/HEAD", timeout=5, ssl=False) as resp:
                 if resp.status != 200: return findings
-        except: return findings
+        except Exception: return findings
 
         if log_callback: log_callback(f"🏴‍☠️ Exposed .git detected! Exfiltrating repository details...")
 

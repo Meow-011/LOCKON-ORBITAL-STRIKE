@@ -20,7 +20,7 @@ async def check_wordpress_vulns(session, base_url):
                         "evidence": api_url,
                         "remediation": "Disable REST API user endpoints or use a security plugin."
                     })
-    except: pass
+    except Exception: pass
 
     # 2. XML-RPC Enabled
     # ช่องทางนี้มักถูกใช้ยิง Brute Force หรือ DDoS
@@ -36,7 +36,7 @@ async def check_wordpress_vulns(session, base_url):
                     "evidence": xmlrpc_url,
                     "remediation": "Disable xmlrpc.php if not needed."
                 })
-    except: pass
+    except Exception: pass
     
     # 3. Sensitive Files (Debug Log)
     debug_url = f"{base_url}/wp-content/debug.log"
@@ -50,7 +50,7 @@ async def check_wordpress_vulns(session, base_url):
                     "evidence": debug_url,
                     "remediation": "Delete debug.log and disable WP_DEBUG_LOG."
                 })
-    except: pass
+    except Exception: pass
 
     return findings
 
@@ -69,7 +69,7 @@ async def run_cms_scan(target_url, log_callback=None, headers=None):
             async with session.get(f"{base_url}/wp-login.php", timeout=5, ssl=False) as resp:
                 if resp.status == 200:
                     is_wp = True
-        except: pass
+        except Exception: pass
 
         if is_wp:
             if log_callback: log_callback(f"🧩 WordPress detected! Running specific CMS checks...")

@@ -35,7 +35,7 @@ async def check_host_header(session, url):
                     "remediation": "Validate Host header against whitelist in web server config."
                 })
 
-    except: pass
+    except Exception: pass
     return findings
 
 async def run_host_header_scan(target_url, log_callback=None, headers=None):

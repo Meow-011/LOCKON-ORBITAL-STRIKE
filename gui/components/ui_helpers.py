@@ -5,7 +5,7 @@ def create_input_label(text, icon):
     return ft.Row(
         [
             ft.Icon(icon, size=14, color=COLOR_TEXT_DIM), 
-            ft.Text(text, size=11, weight="bold", color=COLOR_TEXT_DIM, font_family="Hacker")
+            ft.Text(text, size=11, weight="bold", color=COLOR_TEXT_DIM, font_family="Consolas")
         ], 
         spacing=5
     )

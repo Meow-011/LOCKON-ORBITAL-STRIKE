@@ -114,7 +114,7 @@ async def check_sqli(session, url, stealth_mode=False, chronos=None):
                                 "remediation": "Disable verbose error messages and use Prepared Statements."
                             })
                             return findings # Stop checking this param if found
-            except: pass
+            except Exception: pass
 
         # --- 2. Boolean-Blind SQLi (Inference) ---
         # Compare True vs False response lengths
@@ -122,7 +122,7 @@ async def check_sqli(session, url, stealth_mode=False, chronos=None):
         try:
             async with session.get(url, timeout=5, ssl=False) as base_resp:
                 original_len = len(await base_resp.text())
-        except: pass
+        except Exception: pass
 
         if original_len > 0:
             for true_pay, false_pay in BOOLEAN_PAIRS:
@@ -155,7 +155,7 @@ async def check_sqli(session, url, stealth_mode=False, chronos=None):
                         })
                          return findings
 
-                except: pass
+                except Exception: pass
 
         # --- 3. Union Based (Exfiltration) ---
         for payload in union_payloads:
@@ -178,7 +178,7 @@ async def check_sqli(session, url, stealth_mode=False, chronos=None):
                             "remediation": "Use Prepared Statements."
                         })
                         return findings
-            except: pass
+            except Exception: pass
 
         # --- 4. Time-Based Blind (CHRONOS ENHANCED) ---
         for payload, delay in TIME_PAYLOADS:
@@ -221,7 +221,7 @@ async def check_sqli(session, url, stealth_mode=False, chronos=None):
                         "remediation": "Use Prepared Statements."
                     })
                     return findings
-            except: pass
+            except Exception: pass
             
         # --- 5. OAST Exfiltration (Blind) ---
         for payload in OAST_PAYLOADS:
@@ -232,7 +232,7 @@ async def check_sqli(session, url, stealth_mode=False, chronos=None):
                 # OAST is "Fire and Forget" usually, but we check if we send it successfully
                 async with session.get(target_url, timeout=3, ssl=False) as resp:
                     pass
-            except: pass
+            except Exception: pass
 
     return findings
 
@@ -242,17 +242,11 @@ async def run_safe_sql_injection(target_url, safe_mode=True, log_callback=None, 
         if log_callback: log_callback(f"💉 Testing Advanced SQL Injection (Error, Boolean, Union, Chronos Time)...")
         if stealth_mode and log_callback: log_callback(f"   🐍 Venom Activated: SQL Payloads Obfuscated.")
         
-        # [CHRONOS] Initialize and Calibrate
+        # [CHRONOS] Initialize and Calibrate (async)
         chronos = ChronosTimeParams()
         try:
-             # Calibration is sync, but running in thread so it's fine
-             # Ideally we should use requests.get inside chronos, which might block loop if not careful.
-             # Wait, `run_safe_sql_injection` is called via `self.loop.run_until_complete`.
-             # So this IS running on the main asyncio loop. Blocking calls here will freeze the UI/other tasks.
-             # FOR THIS PROTOTYPE, we accept the brief freeze (calibration take ~2s).
-             # In production, Chronos should be async.
             if log_callback: log_callback(f"   ⏳ Chronos: Calibrating baseline for accurate timing...")
-            chronos.measure_baseline(target_url, headers=headers, samples=5)
+            await chronos.measure_baseline(target_url, headers=headers, samples=5)
         except Exception as e:
             if log_callback: log_callback(f"   ⚠️ Chronos Calibration failed: {e}")
 

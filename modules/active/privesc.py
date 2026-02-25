@@ -54,7 +54,7 @@ async def check_mass_assignment(session, url, method="POST", original_json=None)
                                 })
                     except ValueError:
                         pass
-        except:
+        except Exception:
             pass
             
     return findings
@@ -67,7 +67,7 @@ async def run_privesc_scan(target_url, log_callback=None, headers=None, method="
             json_body = json.loads(body)
         else:
             json_body = body
-    except:
+    except Exception:
         return [] # Not JSON
         
     async with aiohttp.ClientSession(headers=headers) as session:

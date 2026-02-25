@@ -44,7 +44,7 @@ async def check_bucket_permissions(session, bucket_url):
                     "evidence": f"Bucket: {target}",
                     "remediation": "Ensure this bucket is intended to be exposed publicly."
                 }
-    except: pass
+    except Exception: pass
     return None
 
 async def run_bucket_looter(target_url, crawled_urls, log_callback=None, headers=None):
@@ -68,7 +68,7 @@ async def run_bucket_looter(target_url, crawled_urls, log_callback=None, headers
                             # Clean up match
                             m = m.strip("'\"")
                             potential_buckets.add(m)
-            except: pass
+            except Exception: pass
             
         if not potential_buckets: return findings
 

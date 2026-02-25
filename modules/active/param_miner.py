@@ -16,7 +16,7 @@ async def get_baseline(session, url):
         async with session.get(url, timeout=5, ssl=False) as resp:
             text = await resp.text()
             return len(text), resp.status
-    except:
+    except Exception:
         return 0, 0
 
 async def mine_params(session, url, baseline_len, baseline_status):
@@ -54,7 +54,7 @@ async def mine_params(session, url, baseline_len, baseline_status):
                         "evidence": f"Param: {param}\nURL: {target}\nLength Diff: {len_diff} bytes",
                         "remediation": "Ensure debug parameters are removed in production."
                     }
-        except: pass
+        except Exception: pass
         return None
 
     # สร้าง Task ยิงพร้อมกัน

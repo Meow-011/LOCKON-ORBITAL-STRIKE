@@ -57,7 +57,7 @@ async def check_ssti(session, url):
                             "remediation": "Sanitize input or use a sandboxed template environment."
                         })
                         return findings # เจอแล้วหยุดเลย ตัวเดียวรู้เรื่อง
-            except: pass
+            except Exception: pass
             
     return findings
 

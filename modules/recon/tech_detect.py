@@ -72,7 +72,7 @@ async def detect_tech(session, url):
                     "evidence": str(detected)
                 })
                 
-    except:
+    except Exception:
         pass
         
     return findings

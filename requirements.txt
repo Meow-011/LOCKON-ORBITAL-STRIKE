@@ -1,10 +1,18 @@
-flet
-packaging
+# Core UI (Pinned to last stable classic version)
+flet==0.28.3
+
+# Core Network & Utilities
 requests
-pillow
 aiohttp
-beautifulsoup4
 playwright
-pyjwt
+packaging
+beautifulsoup4
+PyJWT
 dnspython
 colorama
+Pillow
+pyyaml
+
+# Database (Verified versions from environment)
+SQLAlchemy==2.0.45
+psycopg2-binary==2.9.11

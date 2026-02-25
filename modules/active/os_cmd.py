@@ -99,7 +99,7 @@ async def check_rce_dump(session, url):
                                     if log_callback: log_callback(f"   ⚠️ C2 Escalation Failed: {e}")
 
                                 return findings # เจอแล้วหยุดเลย ถือว่า Critical สูงสุด
-                    except:
+                    except Exception:
                         pass
     return findings
 

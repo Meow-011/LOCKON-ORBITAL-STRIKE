@@ -1,0 +1,37 @@
+id: exposed-panels
+info:
+  name: Exposed Admin Panels
+  author: lockon
+  severity: medium
+  description: Detects commonly exposed admin panels and management interfaces.
+  tags: admin,panel,exposure
+
+http:
+  - method: GET
+    path:
+      - "{{BaseURL}}/admin"
+      - "{{BaseURL}}/admin/"
+      - "{{BaseURL}}/administrator"
+      - "{{BaseURL}}/wp-admin/"
+      - "{{BaseURL}}/phpmyadmin/"
+      - "{{BaseURL}}/adminer.php"
+      - "{{BaseURL}}/_admin"
+      - "{{BaseURL}}/panel"
+      - "{{BaseURL}}/cpanel"
+      - "{{BaseURL}}/webmail"
+    matchers-condition: and
+    matchers:
+      - type: status
+        status:
+          - 200
+          - 301
+          - 302
+      - type: word
+        part: body
+        condition: or
+        words:
+          - "login"
+          - "password"
+          - "admin"
+          - "dashboard"
+          - "sign in"

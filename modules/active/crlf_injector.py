@@ -38,7 +38,7 @@ async def check_crlf(session, url):
                         "remediation": "Remove CRLF characters from input before using them in HTTP headers."
                     })
                     return findings
-        except: pass
+        except Exception: pass
         
     return findings
 

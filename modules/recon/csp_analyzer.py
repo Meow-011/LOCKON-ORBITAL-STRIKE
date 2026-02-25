@@ -44,7 +44,7 @@ async def analyze_csp(session, url):
                     "evidence": csp
                 })
 
-    except:
+    except Exception:
         pass
         
     return findings

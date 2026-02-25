@@ -69,7 +69,7 @@ async def check_role_manipulation(session, url, original_resp_len):
                             "evidence": f"Url: {target_url}\nSize Diff: {abs(len(text) - original_resp_len)} bytes",
                             "remediation": "Review access controls."
                         })
-            except: pass
+            except Exception: pass
             
     return findings
 
@@ -82,7 +82,7 @@ async def check_idor(session, url, original_cookies=None, other_uuids=None):
             base_text = await resp_base.text()
             base_len = len(base_text)
             base_code = resp_base.status
-    except: return []
+    except Exception: return []
 
     # --- 2. IDOR Checks ---
     target_id = None
@@ -111,7 +111,7 @@ async def check_idor(session, url, original_cookies=None, other_uuids=None):
                     if k in payload_json and str(payload_json[k]).isdigit():
                         smart_targets.append(int(payload_json[k]))
                         smart_targets.append(int(payload_json[k]) - 1) # Scan neighbor
-        except: pass
+        except Exception: pass
         
     for k, v in params.items():
         if v[0].isdigit():
@@ -177,7 +177,7 @@ async def check_idor(session, url, original_cookies=None, other_uuids=None):
                             "remediation": "Implement proper access control checks."
                         })
                         break # One proof is enough per URL
-        except: pass
+        except Exception: pass
 
     # --- 3. Role Manipulation ---
     role_findings = await check_role_manipulation(session, url, base_len)
@@ -195,7 +195,7 @@ async def check_idor(session, url, original_cookies=None, other_uuids=None):
                         "evidence": f"URL: {url}\nAccess works without cookies.",
                         "remediation": "Enforce authentication middleware."
                     })
-        except: pass
+        except Exception: pass
         
     return findings
 
@@ -209,7 +209,7 @@ async def run_idor_scan(target_url, crawled_urls, cookies=None, log_callback=Non
                 if '=' in pair:
                     k, v = pair.strip().split('=', 1)
                     cookie_dict[k] = v
-        except: pass
+        except Exception: pass
         
     # [NEW] Pre-scan: Collect all UUIDs seen in the crawled URLs
     all_uuids = set()

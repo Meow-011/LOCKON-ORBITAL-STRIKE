@@ -97,8 +97,8 @@ async def fuzz_frames(url, log_callback=None):
                                 "evidence": f"Sent: {p}\nReceived: {msg}",
                                 "remediation": "Sanitize templates."
                             })
-                    except: pass
-    except: pass
+                    except Exception: pass
+    except Exception: pass
     return findings
 
 async def run_websocket_scan(url, log_callback=None):

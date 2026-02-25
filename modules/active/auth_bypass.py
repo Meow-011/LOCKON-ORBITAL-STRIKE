@@ -43,7 +43,7 @@ async def try_bypass(session, url, form_details):
         async with session.post(target_url, data={"u": "invalid_user_checks", "p": "invalid_pass_checks"}, timeout=5, ssl=False) as base_resp:
             baseline_status = base_resp.status
             baseline_len = len(await base_resp.text())
-    except: pass
+    except Exception: pass
 
     for payload in BYPASS_PAYLOADS:
         data = {}
@@ -163,6 +163,6 @@ async def run_auth_bypass(target_url, crawled_urls, log_callback=None, headers=N
                             findings.append(result)
                             if log_callback: log_callback(f"🔥 AUTH BYPASSED: {url}")
                             return findings # เจอ 1 ที่ก็ถือว่า Critical แล้ว
-            except: pass
+            except Exception: pass
             
     return findings

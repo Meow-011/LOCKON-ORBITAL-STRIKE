@@ -1,0 +1,41 @@
+id: debug-endpoints
+info:
+  name: Debug Endpoints Exposed
+  author: lockon
+  severity: high
+  description: Detects exposed debug endpoints that may leak sensitive information.
+  tags: debug,misconfig,exposure
+
+http:
+  - method: GET
+    path:
+      - "{{BaseURL}}/.env"
+      - "{{BaseURL}}/debug"
+      - "{{BaseURL}}/debug/pprof"
+      - "{{BaseURL}}/actuator"
+      - "{{BaseURL}}/actuator/env"
+      - "{{BaseURL}}/actuator/health"
+      - "{{BaseURL}}/__debug__/"
+      - "{{BaseURL}}/elmah.axd"
+      - "{{BaseURL}}/server-info"
+      - "{{BaseURL}}/server-status"
+      - "{{BaseURL}}/phpinfo.php"
+      - "{{BaseURL}}/info.php"
+    matchers-condition: and
+    matchers:
+      - type: status
+        status:
+          - 200
+      - type: word
+        part: body
+        condition: or
+        words:
+          - "DB_PASSWORD"
+          - "DATABASE_URL"
+          - "SECRET_KEY"
+          - "phpinfo()"
+          - "SMTP_PASSWORD"
+          - "AWS_SECRET"
+          - "actuator"
+          - "goroutine"
+          - "server-info"

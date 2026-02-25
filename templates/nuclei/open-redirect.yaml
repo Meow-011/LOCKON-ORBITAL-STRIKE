@@ -1,0 +1,30 @@
+id: open-redirect-detect
+info:
+  name: Open Redirect Detection
+  author: lockon
+  severity: medium
+  description: Detects potential open redirect via common redirect parameters.
+  tags: redirect,owasp
+
+http:
+  - method: GET
+    path:
+      - "{{BaseURL}}/redirect?url=https://evil.com"
+      - "{{BaseURL}}/login?next=https://evil.com"
+      - "{{BaseURL}}/logout?redirect=https://evil.com"
+      - "{{BaseURL}}/?redirect_to=https://evil.com"
+      - "{{BaseURL}}/?return=https://evil.com"
+    redirects: false
+    matchers-condition: and
+    matchers:
+      - type: status
+        status:
+          - 301
+          - 302
+          - 303
+          - 307
+          - 308
+      - type: word
+        part: header
+        words:
+          - "evil.com"

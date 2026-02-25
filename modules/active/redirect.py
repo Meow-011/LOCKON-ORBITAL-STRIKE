@@ -42,7 +42,7 @@ async def check_open_redirect(session, url):
                                 "remediation": "Validate the redirect URL against a whitelist."
                             })
                             return findings # เจอแล้วหยุดเลย
-            except:
+            except Exception:
                 pass
                 
     return findings

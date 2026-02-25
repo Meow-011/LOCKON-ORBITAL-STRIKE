@@ -19,7 +19,7 @@ async def send_race_request(session, url, data=None, method="POST"):
         else:
             async with session.get(url, timeout=5, ssl=False) as resp:
                 return resp.status, len(await resp.read())
-    except:
+    except Exception:
         return 0, 0
 
 async def check_race_condition(session, url, method="POST"):

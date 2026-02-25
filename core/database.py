@@ -45,6 +45,19 @@ def init_db():
     except sqlite3.OperationalError:
         pass # Columns already exist
     
+    # Table: C2 Sessions
+    c.execute('''CREATE TABLE IF NOT EXISTS c2_sessions (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        session_id TEXT UNIQUE,
+        target_ip TEXT,
+        hostname TEXT,
+        os_info TEXT,
+        arch TEXT,
+        connected_at TEXT,
+        last_seen TEXT,
+        status TEXT DEFAULT 'active'
+    )''')
+    
     conn.commit()
     conn.close()
 
@@ -104,3 +117,47 @@ def get_scan_findings(scan_id):
     rows = [dict(row) for row in c.fetchall()]
     conn.close()
     return rows
+
+def delete_scan(scan_id):
+    """Delete a scan and its associated findings."""
+    conn = sqlite3.connect(DB_FILE)
+    c = conn.cursor()
+    c.execute("DELETE FROM findings WHERE scan_id = ?", (scan_id,))
+    c.execute("DELETE FROM scans WHERE id = ?", (scan_id,))
+    conn.commit()
+    conn.close()
+
+# --- C2 Session Persistence ---
+
+def save_c2_session(session_data):
+    """Save or update a C2 session."""
+    conn = sqlite3.connect(DB_FILE)
+    c = conn.cursor()
+    now = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+    c.execute('''INSERT OR REPLACE INTO c2_sessions 
+        (session_id, target_ip, hostname, os_info, arch, connected_at, last_seen, status)
+        VALUES (?, ?, ?, ?, ?, ?, ?, ?)''',
+        (session_data.get('session_id'), session_data.get('target_ip', ''),
+         session_data.get('hostname', ''), session_data.get('os_info', ''),
+         session_data.get('arch', ''), session_data.get('connected_at', now),
+         now, session_data.get('status', 'active')))
+    conn.commit()
+    conn.close()
+
+def get_c2_sessions():
+    """Get all stored C2 sessions."""
+    conn = sqlite3.connect(DB_FILE)
+    conn.row_factory = sqlite3.Row
+    c = conn.cursor()
+    c.execute("SELECT * FROM c2_sessions ORDER BY last_seen DESC")
+    rows = [dict(row) for row in c.fetchall()]
+    conn.close()
+    return rows
+
+def delete_c2_session(session_id):
+    """Remove a C2 session from the database."""
+    conn = sqlite3.connect(DB_FILE)
+    c = conn.cursor()
+    c.execute("DELETE FROM c2_sessions WHERE session_id = ?", (session_id,))
+    conn.commit()
+    conn.close()

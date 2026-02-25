@@ -1,7 +1,7 @@
 import time
 import statistics
-import math
-import requests
+import aiohttp
+import asyncio
 
 class ChronosTimeParams:
     """
@@ -15,23 +15,34 @@ class ChronosTimeParams:
         self.min_samples = 10
         self.z_threshold = 4.0 # 4 Sigma (99.997% confidence)
 
-    def measure_baseline(self, url, headers=None, samples=10):
+    async def measure_baseline(self, url, headers=None, session=None, samples=10):
         """
-        Establishes the baseline response time for the target.
+        Establishes the baseline response time for the target using async aiohttp.
         """
         response_times = []
         print(f"[*] Chronos: Calibrating baseline for {url} ({samples} samples)...")
         
-        for _ in range(samples):
-            try:
-                start = time.time()
-                requests.get(url, headers=headers, timeout=10)
-                end = time.time()
-                response_times.append(end - start)
-                time.sleep(0.1) # Breather
-            except:
-                pass
-                
+        # Use provided session or create a temporary one
+        own_session = False
+        if session is None:
+            session = aiohttp.ClientSession()
+            own_session = True
+        
+        try:
+            for _ in range(samples):
+                try:
+                    start = time.time()
+                    async with session.get(url, headers=headers, timeout=aiohttp.ClientTimeout(total=10), ssl=False) as resp:
+                        await resp.read()
+                    end = time.time()
+                    response_times.append(end - start)
+                    await asyncio.sleep(0.1) # Breather
+                except Exception:
+                    pass
+        finally:
+            if own_session:
+                await session.close()
+                    
         if len(response_times) < 3:
             # Fallback if calibration fails
             self.baseline_mean = 0.5

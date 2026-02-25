@@ -1,0 +1,26 @@
+id: cve-2023-44487
+info:
+  name: HTTP/2 Rapid Reset (CVE-2023-44487)
+  author: lockon
+  severity: high
+  description: Checks for HTTP/2 support which may be vulnerable to Rapid Reset DoS attack.
+  tags: cve,dos,http2
+  reference:
+    - https://nvd.nist.gov/vuln/detail/CVE-2023-44487
+
+http:
+  - method: GET
+    path:
+      - "{{BaseURL}}/"
+    matchers-condition: and
+    matchers:
+      - type: regex
+        part: header
+        regex:
+          - "(?i)server:.*(nginx|apache|envoy|h2o)"
+      - type: word
+        part: header
+        condition: or
+        words:
+          - "h2"
+          - "HTTP/2"

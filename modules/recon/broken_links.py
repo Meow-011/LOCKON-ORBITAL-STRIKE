@@ -12,7 +12,7 @@ async def check_link(session, url):
                 async with session.get(url, timeout=5, ssl=False) as get_resp:
                     if get_resp.status == 404:
                         return url, 404
-    except:
+    except Exception:
         # Connection Error มักแปลว่า Domain ดับไปแล้ว (DNS Error) -> น่าสงสัย
         return url, "DNS_ERROR"
         

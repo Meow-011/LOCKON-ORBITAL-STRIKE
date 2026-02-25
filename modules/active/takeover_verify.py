@@ -28,7 +28,7 @@ async def verify_takeover(session, subdomain):
             # For this example, we will check HTTP response primarily, 
             # but knowing CNAME helps confirm the platform.
             pass 
-        except: pass
+        except Exception: pass
 
         # 2. Check HTTP Response
         async with session.get(f"http://{subdomain}", timeout=5, ssl=False) as resp:
@@ -45,7 +45,7 @@ async def verify_takeover(session, subdomain):
                     })
                     return findings # Found one is enough
                     
-    except:
+    except Exception:
         pass
         
     return findings

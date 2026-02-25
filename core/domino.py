@@ -19,9 +19,9 @@ class ChainReactor:
         # --- Evasion Integration (Project PHANTOM CHAIN) ---
         evasion_headers = {}
         proxy = None
-        if hasattr(self.scanner, 'evasion_manager') and self.scanner.evasion_manager:
-            evasion_headers = self.scanner.evasion_manager.get_headers()
-            proxy = self.scanner.evasion_manager.get_proxy()
+        if hasattr(self.scanner, 'evasion') and self.scanner.evasion:
+            evasion_headers = self.scanner.evasion.get_headers()
+            proxy = self.scanner.evasion.get_proxy()
         # ---------------------------------------------------
         
         for f in findings:

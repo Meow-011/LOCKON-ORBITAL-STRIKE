@@ -37,7 +37,7 @@ async def check_cors(session, url):
                     "remediation": "This is okay for public APIs, but risky for private data."
                 })
                 
-    except:
+    except Exception:
         pass
         
     return findings

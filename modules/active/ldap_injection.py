@@ -37,7 +37,7 @@ async def check_ldap_injection(session, url, log_callback=None):
          async with session.get(url, timeout=5, ssl=False) as base_resp:
             base_text = await base_resp.text()
             base_status = base_resp.status
-    except: return []
+    except Exception: return []
 
     for param_name in params:
         original_value = params[param_name][0]
@@ -84,7 +84,7 @@ async def check_ldap_injection(session, url, log_callback=None):
                             "category": "Injection"
                         })
                         
-            except: pass
+            except Exception: pass
             
     return findings
 

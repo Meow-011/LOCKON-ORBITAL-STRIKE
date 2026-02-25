@@ -42,7 +42,7 @@ def save_loot(host, filename, content):
         with open(filepath, "w", encoding="utf-8") as f:
             f.write(content)
         return filepath
-    except:
+    except Exception:
         return "Failed to save locally"
 
 async def check_rce_via_log_poisoning(session, parsed, param_name, original_payload):
@@ -75,7 +75,7 @@ async def check_rce_via_log_poisoning(session, parsed, param_name, original_payl
                         "path": log_path,
                         "output": text[:200]
                     }
-    except: pass
+    except Exception: pass
     return None
 
 async def check_lfi(session, url):
@@ -165,7 +165,7 @@ async def check_lfi(session, url):
                                 loot_path = save_loot(host, "source_code.php", decoded)
                                 text = decoded[:500] + "\n...(Full source saved)" # Show preview only
                                 break
-                        except: pass
+                        except Exception: pass
                     if evidence_found: # If source code found, return immediately
                         findings.append({
                             "type": "Local File Inclusion (Source Code Disclosure)",
@@ -196,7 +196,7 @@ async def check_lfi(session, url):
                     })
                     return findings
 
-            except: pass
+            except Exception: pass
     return findings
 
 async def run_lfi_scan(target_url, log_callback=None, headers=None):

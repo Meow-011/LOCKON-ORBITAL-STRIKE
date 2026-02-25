@@ -33,7 +33,7 @@ async def check_backup_file(session, url):
                     "evidence": evidence,
                     "remediation": "Remove backup files from the public web directory immediately."
                 }
-    except:
+    except Exception:
         pass
     return None
 

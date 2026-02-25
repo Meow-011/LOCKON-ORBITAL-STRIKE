@@ -57,7 +57,7 @@ async def check_debug_mode(session, url):
                         "evidence": f"URL: {target}\nStatus: 200 OK",
                         "remediation": "Disable debug mode and restrict access to internal tools."
                     })
-        except: pass
+        except Exception: pass
         
     return findings
 
@@ -100,7 +100,7 @@ async def check_error_exposure(session, url):
                             })
                             # Found one type for this param is usually enough evidence
                             break 
-            except:
+            except Exception:
                 pass
     return findings
 

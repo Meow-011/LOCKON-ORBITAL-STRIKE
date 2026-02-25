@@ -84,7 +84,7 @@ class PhantomTab:
         try:
             val = int(self.session_dd.value)
             c2_manager.switch_session(val)
-        except: pass
+        except Exception: pass
 
     def send_c2_command(self, e):
         if self.c2_input.value: 
@@ -228,7 +228,7 @@ class PhantomTab:
                     ft.DataCell(ft.Text(f['name'], font_family="Consolas")),
                     ft.DataCell(ft.Text(f['size'], font_family="Consolas")),
                     ft.DataCell(ft.Text(f['user'], font_family="Consolas")),
-                    ft.DataCell(ft.IconButton(ft.Icons.DOWNLOAD, icon_color=COLOR_ACCENT, disabled=is_dir, on_click=lambda e, name=f['name']: self.download_file(name))),
+                    ft.DataCell(ft.IconButton(ft.Icons.DOWNLOAD, icon_color=COLOR_ACCENT_PRIMARY, disabled=is_dir, on_click=lambda e, name=f['name']: self.download_file(name))),
                 ])
             )
         self.file_table.update()

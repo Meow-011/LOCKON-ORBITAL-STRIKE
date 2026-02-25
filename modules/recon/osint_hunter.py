@@ -58,7 +58,7 @@ async def scan_page(session, url, findings, seen_emails):
                     "category": "Information Gathering"
                 })
 
-    except:
+    except Exception:
         pass
 
 async def run_osint_scan(target_url, crawled_urls, log_callback=None, headers=None):

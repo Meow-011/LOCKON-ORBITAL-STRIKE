@@ -119,10 +119,19 @@ class CortexBrain:
         
         return final_delay
 
-    def sleep(self):
+    def sleep(self, stop_event=None):
         """
-        Smart sleep wrapper.
+        Smart sleep wrapper with abort support.
+        Sleeps in small increments so the scan can be aborted mid-delay.
         """
         delay = self.calculate_stealth_delay()
-        time.sleep(delay)
+        if stop_event:
+            elapsed = 0.0
+            while elapsed < delay:
+                if stop_event.is_set():
+                    return 0
+                time.sleep(min(0.1, delay - elapsed))
+                elapsed += 0.1
+        else:
+            time.sleep(delay)
         return delay

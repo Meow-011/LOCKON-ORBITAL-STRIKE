@@ -1,0 +1,31 @@
+id: wp-xmlrpc-detect
+info:
+  name: WordPress XML-RPC Enabled
+  author: lockon
+  severity: medium
+  description: WordPress XML-RPC interface is enabled, which can be used for brute-force and DDoS attacks.
+  tags: wordpress,xmlrpc,misconfig
+  reference:
+    - https://kinsta.com/blog/xmlrpc-php/
+
+http:
+  - method: POST
+    path:
+      - "{{BaseURL}}/xmlrpc.php"
+    headers:
+      Content-Type: text/xml
+    body: |
+      <?xml version="1.0"?>
+      <methodCall>
+        <methodName>system.listMethods</methodName>
+      </methodCall>
+    matchers-condition: and
+    matchers:
+      - type: status
+        status:
+          - 200
+      - type: word
+        part: body
+        words:
+          - "wp.getUsersBlogs"
+          - "system.listMethods"

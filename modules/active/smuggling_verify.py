@@ -70,7 +70,7 @@ async def check_timing_smuggling(target_url, payload_template, vuln_type, header
         writer.close()
         await writer.wait_closed()
         
-    except:
+    except Exception:
         pass
     
     return None

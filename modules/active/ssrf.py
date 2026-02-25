@@ -74,7 +74,7 @@ async def check_ssrf_exfiltration(session, url):
                             "remediation": "Block internal metadata access."
                         })
                         
-            except:
+            except Exception:
                 pass
     return findings
 

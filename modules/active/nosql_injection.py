@@ -52,7 +52,7 @@ async def check_nosql_injection(session, url, log_callback=None):
         try:
              async with session.get(url, timeout=5, ssl=False) as base_resp:
                 base_len = len(await base_resp.text())
-        except: return []
+        except Exception: return []
 
         for item in NOSQL_PAYLOADS:
             payload_desc = item['desc']
@@ -112,7 +112,7 @@ async def check_nosql_injection(session, url, log_callback=None):
                             "evidence": f"Target: {target_url}\nStatus: {base_resp.status} -> {resp.status}",
                             "category": "Injection"
                         })
-            except: pass
+            except Exception: pass
     return findings
 
 async def run_nosql_scan(target_url, log_callback=None, headers=None):

@@ -44,7 +44,7 @@ async def check_takeover(session, url):
                             "remediation": f"Claim the resource on {service} immediately or remove the DNS record."
                         })
                         return findings # Found one match is enough
-    except:
+    except Exception:
         pass
         
     return findings

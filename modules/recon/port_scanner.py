@@ -15,7 +15,7 @@ async def check_port(target, port, timeout=1):
         writer.close()
         await writer.wait_closed()
         return port, True
-    except:
+    except Exception:
         return port, False
 
 async def run_native_port_scan(target_url, log_callback=None):

@@ -1,0 +1,29 @@
+id: log4shell-detect
+info:
+  name: Log4Shell (CVE-2021-44228) Detection
+  author: lockon
+  severity: critical
+  description: Detects potential Log4Shell vulnerability via JNDI lookup patterns in response headers or error messages.
+  tags: cve,log4j,rce,critical
+  reference:
+    - https://nvd.nist.gov/vuln/detail/CVE-2021-44228
+
+http:
+  - method: GET
+    path:
+      - "{{BaseURL}}/"
+    headers:
+      X-Api-Version: "${jndi:ldap://127.0.0.1/test}"
+      User-Agent: "${jndi:ldap://127.0.0.1/test}"
+    matchers-condition: or
+    matchers:
+      - type: word
+        part: body
+        words:
+          - "javax.naming"
+          - "com.sun.jndi"
+          - "JNDI lookup"
+      - type: regex
+        part: header
+        regex:
+          - "(?i)jndi|naming"

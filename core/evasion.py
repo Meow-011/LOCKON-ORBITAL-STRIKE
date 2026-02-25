@@ -15,10 +15,22 @@ USER_AGENTS = [
 PROXIES = [] 
 
 class EvasionManager:
-    def __init__(self, use_jitter=True, use_proxy=False):
+    def __init__(self, use_jitter=True, use_proxy=False, proxy_url=None):
         self.use_jitter = use_jitter
-        self.use_proxy = use_proxy
+        self.use_proxy = use_proxy or bool(proxy_url)
         self.current_ua = random.choice(USER_AGENTS)
+        self.proxy_url = proxy_url
+        self.extra_headers = {}  # [FIX] Persistent headers (auth, kill_chain enrichment)
+        
+        # Load proxy from config if not specified
+        if not self.proxy_url:
+            try:
+                from core import config as app_config
+                if app_config.get("proxy.enabled", False):
+                    self.proxy_url = app_config.get("proxy.url", "")
+                    self.use_proxy = bool(self.proxy_url)
+            except Exception:
+                pass
 
     def get_waf_bypass_headers(self):
         """ Generates headers to confuse WAFs regarding IP origin """
@@ -36,7 +48,7 @@ class EvasionManager:
         return headers
 
     def get_headers(self):
-        """ Returns headers with rotated User-Agent and WAF bypass headers """
+        """ Returns headers with rotated User-Agent, WAF bypass headers, and any extra persistent headers """
         # Rotate UA
         if random.random() > 0.8:
             self.current_ua = random.choice(USER_AGENTS)
@@ -51,6 +63,10 @@ class EvasionManager:
         
         # Merge WAF Bypass Headers
         headers.update(self.get_waf_bypass_headers())
+        
+        # [FIX] Merge persistent extra headers (auth bearer, kill_chain tokens, etc.)
+        if self.extra_headers:
+            headers.update(self.extra_headers)
         
         return headers
 
@@ -85,7 +101,9 @@ class EvasionManager:
         return payload
 
     def get_proxy(self):
-        """ Returns a random proxy if enabled """
+        """ Returns a proxy URL if configured """
+        if self.use_proxy and self.proxy_url:
+            return self.proxy_url
         if self.use_proxy and PROXIES:
             return random.choice(PROXIES)
         return None

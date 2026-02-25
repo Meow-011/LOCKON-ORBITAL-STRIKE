@@ -52,7 +52,7 @@ async def check_mass_assignment(session, url, method):
                             "evidence": f"Payload: {payload}\nResponse: {text[:200]}...",
                             "category": "API Security"
                         })
-        except: pass
+        except Exception: pass
         
     return findings
 
@@ -80,7 +80,7 @@ async def check_method_fuzzing(session, url):
                         "evidence": f"Method: {method}\nStatus: {resp.status}\nResponse: {await resp.text()[:100]}",
                         "category": "API Security"
                     })
-        except: pass
+        except Exception: pass
 
     # B. Auth Bypass (HEAD)
     # Compare HEAD response code with GET/POST response code
@@ -91,7 +91,7 @@ async def check_method_fuzzing(session, url):
                  # Need baseline to compare? Assumed context checks elsewhere.
                  # Generally, HEAD 200 on restricted endpoint is suspicious if content logic triggers
                  pass
-    except: pass
+    except Exception: pass
     
     # C. X-HTTP-Method-Override
     # Try sending GET/POST with Override header to simulate PUT/DELETE
@@ -106,7 +106,7 @@ async def check_method_fuzzing(session, url):
                         "evidence": f"Header: X-HTTP-Method-Override: PUT\nStatus: {resp.status}",
                         "category": "API Security"
                     })
-    except: pass
+    except Exception: pass
 
     return findings
 
@@ -127,7 +127,7 @@ async def run_api_scan(target_url, log_callback=None, headers=None):
             try:
                 async with session.get(target_url, timeout=5, ssl=False) as base:
                     base_len = len(await base.text())
-            except:
+            except Exception:
                 return []
 
             # 1. BOLA Check (IDOR)

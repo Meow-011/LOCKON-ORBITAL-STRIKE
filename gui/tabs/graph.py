@@ -195,9 +195,13 @@ class GraphTab:
         # Redraw Lines
         self.redraw_lines()
         
+        # Hide empty overlay
+        if hasattr(self, 'empty_overlay') and self.empty_overlay.visible:
+            self.empty_overlay.visible = False
+        
         try:
             self.page.update()
-        except: pass
+        except Exception: pass
 
     def redraw_lines(self):
         self.canvas.shapes.clear()
@@ -231,10 +235,22 @@ class GraphTab:
             )
 
     def get_content(self):
+        # Empty state overlay — hides when nodes are added
+        self.empty_overlay = ft.Container(
+            content=ft.Column([
+                ft.Icon(ft.Icons.POLYLINE_OUTLINED, size=48, color=COLOR_TEXT_DIM),
+                ft.Text("Waiting for scan data to visualize attack paths...", size=14, color=COLOR_TEXT_DIM, weight="bold"),
+                ft.Text("Findings will appear as nodes connected to kill chain phases.", size=11, color=COLOR_TEXT_DIM),
+            ], horizontal_alignment=ft.CrossAxisAlignment.CENTER, spacing=8),
+            alignment=ft.alignment.center,
+            expand=True,
+            bgcolor=ft.Colors.with_opacity(0.85, COLOR_BG_APP),
+            visible=True  # Show by default
+        )
         return ft.Column([
             ft.Row([
                 ft.Icon(ft.Icons.POLYLINE, color=COLOR_SEV_CRITICAL),
-                ft.Text("BLOODHOUND ATTACK GRAPH (Visual Matrix)", font_family="Hacker", size=16, color=COLOR_SEV_CRITICAL),
+                ft.Text("BLOODHOUND ATTACK GRAPH (Visual Matrix)", font_family="Consolas", size=16, color=COLOR_SEV_CRITICAL),
                 ft.Container(expand=True),
                 ft.Text("Drag to Pan | Scroll to Zoom", color=COLOR_TEXT_DIM, size=10),
                 ft.IconButton(ft.Icons.ZOOM_IN, on_click=lambda e: self.zoom(0.1), tooltip="Zoom In", icon_size=16),
@@ -242,7 +258,7 @@ class GraphTab:
                 ft.IconButton(ft.Icons.CENTER_FOCUS_STRONG, on_click=self.reset_view, tooltip="Reset View", icon_size=16),
             ]),
             ft.Divider(color="#333333", height=1),
-            self.graph_container
+            ft.Stack([self.graph_container, self.empty_overlay], expand=True)
         ], expand=True, spacing=0)
 
     def zoom(self, delta):

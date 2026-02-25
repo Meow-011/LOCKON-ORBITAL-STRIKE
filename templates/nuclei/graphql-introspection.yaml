@@ -1,0 +1,29 @@
+id: graphql-introspection
+info:
+  name: GraphQL Introspection Enabled
+  author: lockon
+  severity: medium
+  description: GraphQL introspection is enabled, allowing attackers to enumerate the entire API schema.
+  tags: graphql,api,misconfig
+  reference:
+    - https://graphql.org/learn/introspection/
+
+http:
+  - method: POST
+    path:
+      - "{{BaseURL}}/graphql"
+      - "{{BaseURL}}/api/graphql"
+      - "{{BaseURL}}/graphql/console"
+    headers:
+      Content-Type: application/json
+    body: '{"query":"{ __schema { types { name } } }"}'
+    matchers-condition: and
+    matchers:
+      - type: status
+        status:
+          - 200
+      - type: word
+        part: body
+        words:
+          - "__schema"
+          - "types"

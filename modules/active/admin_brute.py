@@ -76,7 +76,7 @@ async def check_username_enumeration(session, url, form_details):
              async with session.post(url, data=data, timeout=10, ssl=False) as resp:
                 text = await resp.text()
                 return text, time.time() - start
-        except: return "", 0
+        except Exception: return "", 0
 
     # 1. Error-Based Check
     text_exist, time_exist = await send_login(target_user, dummy_pass)
@@ -173,7 +173,7 @@ async def try_login(session, url, username, password):
                             "password": password,
                             "url": url
                         }
-    except:
+    except Exception:
         pass
     return None
 
@@ -203,7 +203,7 @@ async def run_admin_brute(target_url, crawled_urls, log_callback=None, headers=N
                     # Check Enumeration
                     enum_findings = await check_username_enumeration(session, url, form_data)
                     findings.extend(enum_findings)
-            except: pass
+            except Exception: pass
 
             # 2. Brute Force & Credential Stuffing
             if log_callback: log_callback(f"   Attempting Login (Defaults + Stuffing) on {url}...")

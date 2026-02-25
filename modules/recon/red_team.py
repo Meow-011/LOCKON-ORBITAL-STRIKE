@@ -43,7 +43,7 @@ async def run_port_scan(target, log_callback=None):
         
         if open_ports:
             return [{"type": "Open Port", "severity": "Info", "detail": p, "evidence": "Nmap Scan"} for p in open_ports]
-    except: pass
+    except Exception: pass
     return []
 
 from urllib.parse import urlparse
@@ -56,7 +56,7 @@ async def run_subdomain_enum(target, log_callback=None):
         if "://" not in target: target = "http://" + target
         parsed = urlparse(target)
         domain = parsed.netloc.split(":")[0] # Remove port if present
-    except:
+    except Exception:
         domain = target.replace("http://", "").replace("https://", "").split("/")[0]
 
     if log_callback: log_callback(f"🔍 Enforcing Subdomain Discovery on {domain}...")
@@ -72,7 +72,7 @@ async def run_subdomain_enum(target, log_callback=None):
         if log_callback: log_callback(f"   Found {len(subs)} subdomains.")
         # [FIX] Added evidence field for UI aggregation support
         return [{"type": "Subdomain Found", "severity": "Info", "detail": s, "evidence": s} for s in subs]
-    except: pass
+    except Exception: pass
     return []
 
 async def run_nuclei_scan(target, log_callback=None, headers=None):
@@ -113,7 +113,7 @@ async def run_nuclei_scan(target, log_callback=None, headers=None):
                     "detail": info.get('description', 'Detected by Nuclei'),
                     "evidence": f"Matcher: {data.get('matcher-name')}\nURL: {data.get('matched-at')}"
                 })
-            except: pass
+            except Exception: pass
             
         if findings and log_callback:
             log_callback(f"☢️  Nuclei found {len(findings)} issues!")

@@ -19,6 +19,14 @@ COLOR_SEV_MEDIUM = "#D29922"
 COLOR_SEV_LOW = "#3FB950"
 COLOR_SEV_INFO = "#58A6FF"
 
+# --- Centralized Surface Colors (previously per-tab) ---
+COLOR_SURFACE = "#161B22"
+COLOR_INPUT_FIELD = "#0D1117"
+COLOR_BORDER_SUBTLE = "#30363D"
+COLOR_ACCENT_PRIMARY = "#58A6FF"
+COLOR_ACCENT_WARN = "#D29922"
+COLOR_ACCENT_DANGER = "#FF7B72"
+
 # --- FONTS ---
 FONTS = {
     "Hacker": "Consolas, 'Courier New', monospace",
@@ -29,17 +37,21 @@ def apply_theme(page: ft.Page):
     page.title = APP_TITLE
     page.theme_mode = ft.ThemeMode.DARK
     page.bgcolor = COLOR_BG_APP
-    page.window_width = 1600
-    page.window_height = 900
+    page.window.width = 1600
+    page.window.height = 900
     page.padding = 0
     page.fonts = FONTS
     
     page.theme = ft.Theme(
         font_family="UI",
         scrollbar_theme=ft.ScrollbarTheme(
-            thumb_color={ft.ControlState.DEFAULT: "#30363D"},
+            thumb_color={
+                ft.ControlState.DEFAULT: "#30363D",
+                ft.ControlState.HOVERED: "#484F58",
+            },
             thickness=8,
             radius=4,
             interactive=True
         )
     )
+

@@ -1,0 +1,34 @@
+id: security-headers-missing
+info:
+  name: Missing Security Headers
+  author: lockon
+  severity: medium
+  description: Checks for missing or misconfigured HTTP security headers.
+  tags: headers,misconfig,security
+
+http:
+  - method: GET
+    path:
+      - "{{BaseURL}}/"
+    matchers-condition: or
+    matchers:
+      - type: word
+        part: header
+        negative: true
+        words:
+          - "Strict-Transport-Security"
+      - type: word
+        part: header
+        negative: true
+        words:
+          - "Content-Security-Policy"
+      - type: word
+        part: header
+        negative: true
+        words:
+          - "X-Content-Type-Options"
+      - type: word
+        part: header
+        negative: true
+        words:
+          - "X-Frame-Options"

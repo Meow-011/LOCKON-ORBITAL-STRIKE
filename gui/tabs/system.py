@@ -19,13 +19,13 @@ class SystemTab:
         self.log_callback = log_callback
         self.monitoring = True
         
-        # [THEME] Tactical Slate Palette
-        self.COLOR_SURFACE = "#1E1E1E"
-        self.COLOR_INPUT = "#252525" 
-        self.COLOR_BORDER_SUBTLE = "#333333"
-        self.COLOR_ACCENT_PRIMARY = ft.Colors.CYAN_400
-        self.COLOR_ACCENT_WARN = ft.Colors.AMBER_400
-        self.COLOR_ACCENT_CRITICAL = ft.Colors.RED_400
+        # Use centralized theme colors
+        self.COLOR_SURFACE = COLOR_SURFACE
+        self.COLOR_INPUT = COLOR_INPUT_FIELD
+        self.COLOR_BORDER_SUBTLE = COLOR_BORDER_SUBTLE
+        self.COLOR_ACCENT_PRIMARY = COLOR_ACCENT_PRIMARY
+        self.COLOR_ACCENT_WARN = COLOR_ACCENT_WARN
+        self.COLOR_ACCENT_CRITICAL = COLOR_ACCENT_DANGER
         
         # --- UI Components ---
         self.cpu_bar = ft.ProgressBar(value=0, color=self.COLOR_ACCENT_PRIMARY, bgcolor="#222", height=8, border_radius=4)
@@ -84,7 +84,7 @@ class SystemTab:
                 self.lbl_sys_info.update()
                 
                 time.sleep(2)
-            except:
+            except Exception:
                 time.sleep(2)
 
     def get_content(self):

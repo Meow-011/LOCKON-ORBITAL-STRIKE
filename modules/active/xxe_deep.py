@@ -83,8 +83,8 @@ class XXEScanner:
                             
                             # DoS check (Billion Laughs) - Skipping for safety in auto-scan unless requested.
                             
-                    except: pass
-        except: pass
+                    except Exception: pass
+        except Exception: pass
         
         return findings
 

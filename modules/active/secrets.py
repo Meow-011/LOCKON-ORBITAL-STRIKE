@@ -31,7 +31,7 @@ async def validate_google_key(session, key):
                 return "Active (Google Maps API Access Confirmed)"
             elif resp.status == 403:
                 return "Inactive/Restricted"
-    except: pass
+    except Exception: pass
     return "Unknown Status"
 
 async def validate_stripe_key(session, key):
@@ -47,7 +47,7 @@ async def validate_stripe_key(session, key):
                      return "Active (Financial Transaction Access Possible)"
             if resp.status == 401:
                 return "Invalid/Expired"
-    except: pass
+    except Exception: pass
     return "Unknown Status"
 
 async def validate_mailgun_key(session, key):
@@ -59,7 +59,7 @@ async def validate_mailgun_key(session, key):
                 return "Active (Email Sending Access Confirmed)"
             elif resp.status == 401:
                 return "Invalid"
-    except: pass
+    except Exception: pass
     return "Unknown Status"
 
 async def scan_js_file(session, url):
@@ -117,7 +117,7 @@ async def scan_js_file(session, url):
                         "remediation": "Review manual check if this is a hardcoded secret."
                      })
 
-    except: pass
+    except Exception: pass
     return findings
 
 async def run_secret_scan(target_url, js_urls, log_callback=None, headers=None):

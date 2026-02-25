@@ -24,7 +24,7 @@ async def check_path(session, url):
                 # พยายาม decode เป็น text (ถ้าทำได้)
                 try:
                     text = content_bytes.decode('utf-8', errors='ignore')
-                except:
+                except Exception:
                     text = ""
 
                 content_type = resp.headers.get("Content-Type", "").lower()
@@ -114,7 +114,7 @@ async def check_path(session, url):
                     "detail": f"Path exists but is forbidden: {url}",
                     "evidence": "Status: 403 Forbidden"
                 }
-    except:
+    except Exception:
         pass
     return None
 

@@ -64,7 +64,7 @@ async def check_sensitive_files(session, base_url):
                         "detail": f"Found accessible file: {file}",
                         "remediation": "Ensure this file is not publicly accessible."
                     })
-        except:
+        except Exception:
             pass
             
     return findings

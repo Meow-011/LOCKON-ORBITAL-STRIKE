@@ -37,7 +37,7 @@ async def verify_xss_with_browser(url, headers=None):
             # ไปที่ URL ที่มี Payload
             try:
                 await page.goto(url, timeout=10000, wait_until="domcontentloaded")
-            except: pass # บางทีหน้าเว็บโหลดไม่เสร็จแต่ Script รันแล้วก็มี
+            except Exception: pass # บางทีหน้าเว็บโหลดไม่เสร็จแต่ Script รันแล้วก็มี
 
             # 1. ตรวจสอบว่า Script รันหรือไม่ (เช็คตัวแปร window.hacked)
             is_executed = await page.evaluate("() => window.hacked === 1")
@@ -106,7 +106,7 @@ async def check_dom_xss(session, url):
                             "evidence": f"Match: {sink} ... {source}\nURL: {url}",
                             "remediation": "Avoid using dangerous sinks with untrusted input."
                         })
-    except: pass
+    except Exception: pass
     
     return findings
 
@@ -176,7 +176,7 @@ async def check_xss(session, url, log_callback=None, headers=None, stealth_mode=
                     # If standard payload, check reflection
                     if not stealth_mode and payload not in text and "hacked" not in text:
                         continue 
-            except: continue
+            except Exception: continue
 
             # Step 3: Active Verification (Playwright)
             if log_callback: log_callback(f"   Potential XSS on '{param_name}'. Verifying & Exfiltrating with Browser...")

@@ -29,7 +29,7 @@ async def check_methods(session, url):
                             "evidence": f"Allow: {allow_header}",
                             "remediation": "Disable unnecessary HTTP methods in web server configuration."
                         })
-    except: pass
+    except Exception: pass
 
     # 2. Check TRACE (XST Vulnerability)
     # TRACE จะสะท้อน Request กลับมา ถ้าสะท้อน Cookie ได้ = ขโมย Session ได้แม้มี HttpOnly
@@ -43,7 +43,7 @@ async def check_methods(session, url):
                     "evidence": "Server responded with 200 OK to TRACE.",
                     "remediation": "Disable TRACE method."
                 })
-    except: pass
+    except Exception: pass
     
     # 3. Check PUT (File Upload Risk)
     try:
@@ -57,7 +57,7 @@ async def check_methods(session, url):
                     "evidence": f"Status: {resp.status} on {url}/lockon_test.txt",
                     "remediation": "Disable PUT method or require authentication."
                 })
-    except: pass
+    except Exception: pass
 
     return findings
 

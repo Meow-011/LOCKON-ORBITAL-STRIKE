@@ -1,0 +1,26 @@
+id: spring4shell-detect
+info:
+  name: Spring4Shell (CVE-2022-22965) Detection
+  author: lockon
+  severity: critical
+  description: Detects Spring4Shell RCE via class.module.classLoader property manipulation.
+  tags: cve,spring,rce
+  reference:
+    - https://nvd.nist.gov/vuln/detail/CVE-2022-22965
+
+http:
+  - method: GET
+    path:
+      - "{{BaseURL}}/?class.module.classLoader.URLs%5B0%5D=0"
+    matchers-condition: and
+    matchers:
+      - type: status
+        status:
+          - 200
+          - 400
+      - type: word
+        part: body
+        negative: true
+        words:
+          - "404"
+          - "Not Found"

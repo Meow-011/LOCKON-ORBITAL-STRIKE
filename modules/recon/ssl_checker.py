@@ -41,7 +41,7 @@ def check_weak_ciphers(hostname, port=443):
                         "evidence": f"Cipher Suite: {cipher_str}",
                         "remediation": "Disable weak ciphers. Use modern TLS 1.2+ suites only."
                     })
-        except:
+        except Exception:
             pass
             
     return weak_findings
@@ -65,7 +65,7 @@ def get_ssl_info_sync(hostname, port=443):
                 # Re-do with default settings to get parsed cert if possible
                 pass
                 
-    except: pass
+    except Exception: pass
 
     # Use standard validation attempt for expiration details
     try:
@@ -139,7 +139,7 @@ async def run_ssl_scan(target_url, log_callback=None):
     port = 443
     if ":" in parsed.netloc:
         try: port = int(parsed.netloc.split(":")[1])
-        except: pass
+        except Exception: pass
         
     if log_callback: log_callback(f"🔒 Analyzing SSL/TLS Configuration for {hostname}...")
     

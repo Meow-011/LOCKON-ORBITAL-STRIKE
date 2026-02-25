@@ -33,7 +33,7 @@ async def scan_page_info(session, url):
                             m = re.search(pattern, chunk)
                             if m:
                                 pii_found["metadata"].append(f"PDF {pattern.split(b' ')[0].decode()}: {m.group(1).decode(errors='ignore')}")
-                    except: pass
+                    except Exception: pass
                     
                 # EXIF (Basic Search for Software/Make)
                 if url.endswith((".jpg", ".jpeg")):
@@ -42,7 +42,7 @@ async def scan_page_info(session, url):
                      try:
                          if b"Adobe Photoshop" in chunk: pii_found["metadata"].append("EXIF: Processed with Adobe Photoshop")
                          if b"iPhone" in chunk: pii_found["metadata"].append("EXIF: Camera - iPhone")
-                     except: pass
+                     except Exception: pass
                      
                 return pii_found # Stop text scanning for binary files
 
@@ -80,7 +80,7 @@ async def scan_page_info(session, url):
                 if domain in text:
                     pii_found["socials"].add(domain)
 
-    except:
+    except Exception:
         pass
         
     return pii_found

@@ -28,7 +28,7 @@ async def crack_and_forge(token, public_key=None):
                 "evidence": f"Forged Token (Unsigned):\n{none_token}",
                 "remediation": "Reject tokens with 'none' algorithm or empty signatures."
             })
-        except: pass
+        except Exception: pass
 
         # --- Attack 2: Header Parameter Injection (jku/x5u/kid) ---
         dangerous_headers = ["jku", "x5u", "jwk"]
@@ -62,7 +62,7 @@ async def crack_and_forge(token, public_key=None):
                     "evidence": f"Public Key used as Secret.\nForged Token:\n{confusion_token}",
                     "remediation": "Enforce algorithm verification (strictly RS256)."
                 })
-            except: pass
+            except Exception: pass
 
         # --- Attack 4: Brute Force Secret (HS256) ---
         # Only relevant if using Symmetric keys or if we want to try generic secrets anyway
@@ -75,7 +75,7 @@ async def crack_and_forge(token, public_key=None):
                     break
                 except jwt.InvalidSignatureError:
                     continue
-                except: pass
+                except Exception: pass
             
             if cracked_secret:
                 # [NO MERCY] Forge Admin Token
@@ -127,7 +127,7 @@ async def run_jwt_scan(target_url, log_callback=None, headers=None):
                         res = await crack_and_forge(token, public_key=mock_public_key)
                         findings.extend(res)
                         if res and log_callback: log_callback("🔥 JWT Vulnerability Found!")
-    except:
+    except Exception:
         pass
         
     return findings

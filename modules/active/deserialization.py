@@ -71,7 +71,7 @@ async def check_deserialization(session, url):
                             "detail": f"Triggered Java Deserialization error with crafted payload on '{param_name}'.",
                             "evidence": f"Error Snippet: {text[:200]}",
                         })
-            except: pass
+            except Exception: pass
             
             # [PROBE] PHP Object Injection (Generic)
             # Try to inject an object that might cause issues or sleep (unlikely without known class)
@@ -88,7 +88,7 @@ async def check_deserialization(session, url):
                             "detail": f"Application attempted to deserialize injected PHP object on '{param_name}'.",
                             "evidence": f"Error Snippet: {text[:200]}",
                         })
-            except: pass
+            except Exception: pass
 
     return findings
 

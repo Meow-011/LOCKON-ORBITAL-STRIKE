@@ -17,7 +17,7 @@ async def check_introspection(session, url):
                 data = await resp.json()
                 if "data" in data and "__schema" in data["data"]:
                     return True
-    except: pass
+    except Exception: pass
     return False
 
 async def check_batching(session, url):
@@ -35,7 +35,7 @@ async def check_batching(session, url):
                 # If we get a JSON array response back with 3 results
                 if text.strip().startswith("[") and text.count("__typename") >= 3:
                     return True
-    except: pass
+    except Exception: pass
     return False
 
 async def run_graphql_scan(target_url, log_callback=None, headers=None):
@@ -66,7 +66,7 @@ async def run_graphql_scan(target_url, log_callback=None, headers=None):
                                  "evidence": "Query: { __schema { types { name } } }",
                                  "remediation": "Disable Introspection in production."
                              })
-            except: pass
+            except Exception: pass
             
         # 2. Attacks on Found Endpoints
         for gql_url in found_graphql:

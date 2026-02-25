@@ -46,9 +46,9 @@ async def check_swagger(session, base_url):
                                 discovered_endpoints.append(full_ep)
                                 
                             break # Found one, likely the main one
-                    except:
+                    except Exception:
                         pass
-        except:
+        except Exception:
             pass
             
     return findings, discovered_endpoints
@@ -128,6 +128,6 @@ async def run_api_security_scan(target_url, all_urls, log_callback=None, headers
                                 "evidence": f"Original: {url}\nSwapped: {swapped_url}\nStatus: {resp.status} (OK)",
                                 "remediation": "Enforce ownership checks on object access."
                              })
-                except: pass
+                except Exception: pass
         
     return findings

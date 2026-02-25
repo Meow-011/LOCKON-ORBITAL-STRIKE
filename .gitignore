@@ -27,3 +27,13 @@ bin/
 session.db
 *.db
 *.log
+config.json
+
+# Excluded Projects
+LOCKON-SPECTRE/
+
+# Misc
+complain.txt
+network_audit_analysis.txt
+current_versions.txt
+deps.txt
