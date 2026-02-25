@@ -12,6 +12,7 @@ dnspython
 colorama
 Pillow
 pyyaml
+reportlab
 
 # Database (Verified versions from environment)
 SQLAlchemy==2.0.45
